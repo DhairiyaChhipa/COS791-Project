@@ -121,3 +121,18 @@ class GeneticAlgorithmNeighbourSearch:
 
     def getBest(self):
         return self._generation[0]
+
+    def hillClimbing(self, chromosome: Chromosome):
+        bestSolution = chromosome
+        bestCost = self.calculateFitness(bestSolution)
+
+        for _ in range(Constants.GENERATIONS.value):
+            newSolution = self.localSearch(bestSolution)
+            newCost = self.calculateFitness(newSolution)
+
+            if (self.compareFitness(newCost, bestCost)):
+                bestSolution = newSolution
+                bestCost = newCost
+
+        return bestSolution, bestCost
+        

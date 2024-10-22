@@ -1,18 +1,23 @@
 import math
-import math
 from matplotlib import pyplot as plt
 import numpy as np
 
 
-class Kapur:
+class Kapur(object):
     def __init__(self, image):
-        self._image = image
         self._histogram = None
+        self.histogram = None
         self._probabilities = None
-        self._image = None
-        self.setImage(image)
+        self.image = image
+
+    def __del__(self):
+        del self._histogram
+        del self.histogram
+        del self._probabilities
+        del self.image
 
     def run(self, thresholds):
+        self.generateHistogram(self.image)
         classProbabilities = self.calculateProbabilities(thresholds)
         entropy = self.calculateEntropy(thresholds, classProbabilities)
         return entropy
@@ -39,7 +44,7 @@ class Kapur:
             entropy = 0
 
             for i in range(previousThreshold, nextThreshold + 1):
-                if (self._probabilities[i] > 0):
+                if self._probabilities[i] > 0:
                     ln = self._probabilities[i] / classProbabilities[x]
                     entropy += ln * math.log(ln)
 
@@ -47,22 +52,17 @@ class Kapur:
 
         return totalEntropy
 
-    def setImage(self, image):
-        self._image = image
-        if image is not None:
-            self.generateHistogram(image)
-
     def generateHistogram(self, image):
-        self._histogram = {}
+        self.histogram = {}
         self._probabilities = {}
         totalPixels = image.shape[0] * image.shape[1]
 
         for i in range(0, 256):
             count = np.count_nonzero(image == i)
-            self._histogram.update({i: count})
+            self.histogram.update({i: count})
 
         for i in range(0, 256):
-            self._probabilities.update({i: self._histogram[i] / totalPixels})
+            self._probabilities.update({i: self.histogram[i] / totalPixels})
 
     def buildColorImage(self, image, thresholds):
         colourImage = np.zeros((image.shape[0], image.shape[1], 3), dtype=np.uint32)
