@@ -3,7 +3,8 @@ import math
 from matplotlib import pyplot as plt
 import numpy as np
 
-class Kapur():
+
+class Kapur:
     def __init__(self, image):
         self._image = image
         self._histogram = None
@@ -15,7 +16,7 @@ class Kapur():
         classProbabilities = self.calculateProbabilities(thresholds)
         entropy = self.calculateEntropy(thresholds, classProbabilities)
         return entropy
-    
+
     def calculateProbabilities(self, thresholds):
         classProbabilities = []
 
@@ -29,14 +30,14 @@ class Kapur():
             classProbabilities.append(classProbability)
 
         return classProbabilities
-    
+
     def calculateEntropy(self, thresholds, classProbabilities):
         totalEntropy = 0
 
         for x in range(len(thresholds) + 1):
             previousThreshold, nextThreshold = self.getThresholds(x, thresholds)
             entropy = 0
-            
+
             for i in range(previousThreshold, nextThreshold + 1):
                 if (self._probabilities[i] > 0):
                     ln = self._probabilities[i] / classProbabilities[x]
@@ -48,7 +49,7 @@ class Kapur():
 
     def setImage(self, image):
         self._image = image
-        if (image is not None):
+        if image is not None:
             self.generateHistogram(image)
 
     def generateHistogram(self, image):
@@ -58,14 +59,15 @@ class Kapur():
 
         for i in range(0, 256):
             count = np.count_nonzero(image == i)
-            self._histogram.update({i : count})
+            self._histogram.update({i: count})
 
         for i in range(0, 256):
-            self._probabilities.update({i : self._histogram[i] / totalPixels})
-    
+            self._probabilities.update({i: self._histogram[i] / totalPixels})
+
     def buildColorImage(self, image, thresholds):
         colourImage = np.zeros((image.shape[0], image.shape[1], 3), dtype=np.uint32)
         k = len(thresholds)
+
         red = [255, 0, 0]
         orange = [255, 165, 0]
         yellow = [255, 255, 0]
@@ -74,24 +76,24 @@ class Kapur():
         purple = [160, 32, 420]
 
         for row in range(image.shape[0]):
-            for col in range (image.shape[1]):
+            for col in range(image.shape[1]):
                 currPixel = image[row][col]
 
-                if (currPixel >= 0 and currPixel <= thresholds[0]):
+                if currPixel >= 0 and currPixel <= thresholds[0]:
                     colourImage[row][col] = red
-                elif (currPixel > thresholds[k - 1] and currPixel <= 255):
+                elif currPixel > thresholds[k - 1] and currPixel <= 255:
                     colourImage[row][col] = purple
 
-                if (1 < k and currPixel >= thresholds[0] and currPixel <= thresholds[1]):
+                if 1 < k and currPixel >= thresholds[0] and currPixel <= thresholds[1]:
                     colourImage[row][col] = orange
 
-                elif (2 < k and currPixel >= thresholds[1] and currPixel <= thresholds[2]):
+                elif 2 < k and currPixel >= thresholds[1] and currPixel <= thresholds[2]:
                     colourImage[row][col] = yellow
 
-                elif (3 < k and currPixel >= thresholds[2] and currPixel <= thresholds[3]):
+                elif 3 < k and currPixel >= thresholds[2] and currPixel <= thresholds[3]:
                     colourImage[row][col] = green
 
-                elif (4 < k and currPixel >= thresholds[3] and currPixel <= thresholds[4]):
+                elif 4 < k and currPixel >= thresholds[3] and currPixel <= thresholds[4]:
                     colourImage[row][col] = blue
 
         return colourImage
@@ -107,30 +109,30 @@ class Kapur():
             totalPixels = 0
 
             for intensity, frequency in self._histogram.items():
-                if (intensity >= previousThreshold and intensity < nextThreshold):
+                if intensity >= previousThreshold and intensity < nextThreshold:
                     classMean += intensity * frequency
                     totalPixels += frequency
 
             grayLevels.append(classMean // totalPixels)
 
         for row in range(image.shape[0]):
-            for col in range (image.shape[1]):
+            for col in range(image.shape[1]):
                 currPixel = image[row][col]
-                if (currPixel >= 0 and currPixel <= thresholds[0]):
+                if currPixel >= 0 and currPixel <= thresholds[0]:
                     grayImage[row][col] = grayLevels[0]
-                elif (currPixel > thresholds[k - 1] and currPixel <= 255):
+                elif currPixel > thresholds[k - 1] and currPixel <= 255:
                     grayImage[row][col] = grayLevels[len(grayLevels) - 1]
 
-                if (1 < k and currPixel >= thresholds[0] and currPixel <= thresholds[1]):
+                if 1 < k and currPixel >= thresholds[0] and currPixel <= thresholds[1]:
                     grayImage[row][col] = grayLevels[1]
 
-                elif (2 < k and currPixel >= thresholds[1] and currPixel <= thresholds[2]):
+                elif 2 < k and currPixel >= thresholds[1] and currPixel <= thresholds[2]:
                     grayImage[row][col] = grayLevels[2]
 
-                elif (3 < k and currPixel >= thresholds[2] and currPixel <= thresholds[3]):
+                elif 3 < k and currPixel >= thresholds[2] and currPixel <= thresholds[3]:
                     grayImage[row][col] = grayLevels[3]
 
-                elif (4 < k and currPixel >= thresholds[3] and currPixel <= thresholds[4]):
+                elif 4 < k and currPixel >= thresholds[3] and currPixel <= thresholds[4]:
                     grayImage[row][col] = grayLevels[4]
 
         return grayImage
@@ -148,7 +150,7 @@ class Kapur():
         plt.show()
 
     def displayHistogramImage(self, image):
-        plt.hist(image.ravel(),256,[0,256])
+        plt.hist(image.ravel(), 256, [0, 256])
         plt.show()
 
     def getThresholds(self, index, thresholds):

@@ -14,7 +14,7 @@ class Constants(Enum):
     SEED = 1234
 
 
-class GeneticAlgorithm:
+class GeneticAlgorithmNeighbourSearch:
     def __init__(self, image):
         self._generation = []
         self._image = image
