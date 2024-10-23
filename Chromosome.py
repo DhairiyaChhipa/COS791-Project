@@ -1,13 +1,13 @@
 import numpy as np
 from Kapur import Kapur
 
-
 class Chromosome:
     def __init__(self, kapur: Kapur, size: int = None, thresholds: list = None, fitness: float = 0):
         self.size = 0
         self.thresholds = []
         self.fitness = 0
         self.kapur = kapur
+
         if size is not None:  # Generate an entirely new chromosome
             self.size = size
             self.kapur = kapur
@@ -17,6 +17,7 @@ class Chromosome:
             self.thresholds = thresholds
             self.fitness = fitness
             self.kapur = kapur
+
             if self.fitness == 0:
                 self.fitness = self.kapur.run(self.thresholds)
 

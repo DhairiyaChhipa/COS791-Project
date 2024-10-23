@@ -2,16 +2,13 @@ import math
 from matplotlib import pyplot as plt
 import numpy as np
 
-
 class Kapur(object):
     def __init__(self, image):
-        self._histogram = None
         self.histogram = None
         self._probabilities = None
         self.image = image
 
     def __del__(self):
-        del self._histogram
         del self.histogram
         del self._probabilities
         del self.image
@@ -108,7 +105,7 @@ class Kapur(object):
             classMean = 0
             totalPixels = 0
 
-            for intensity, frequency in self._histogram.items():
+            for intensity, frequency in self.histogram.items():
                 if intensity >= previousThreshold and intensity < nextThreshold:
                     classMean += intensity * frequency
                     totalPixels += frequency

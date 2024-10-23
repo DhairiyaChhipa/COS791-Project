@@ -104,10 +104,7 @@ class GeneticAlgorithm:
             self._generation[x] = newGeneration[x]
 
     def compareFitness(self, x: Chromosome, y: Chromosome):
-        if x.fitness > y.fitness:
-            return True
-        else:
-            return False
+        return x.fitness > y.fitness
 
     def reorderPopulation(self):
         for i in range(int(Constants.POPULATION_SIZE.value)):
