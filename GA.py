@@ -82,9 +82,6 @@ class GeneticAlgorithm:
 
         return childThresholds1, childThresholds2
 
-    def ILS(self, list: list):
-        return None
-
     def mutation(self, thresholds: list):
         # Random mutation
         childThresholds = thresholds
