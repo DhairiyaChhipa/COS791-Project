@@ -6,7 +6,7 @@ from Kapur import Kapur
 class Constants(Enum):
     CROSSOVER_RATE = 0.7
     MUTATION_RATE = 0.3
-    # LOCAL_SEARCH_RATE = 0.4
+    LOCAL_SEARCH_RATE = 0.4
     GENERATIONS = 100
     LOCAL_ITERATIONS = 30
     POPULATION_SIZE = 26
@@ -69,7 +69,9 @@ class GeneticAlgorithmNeighbourSearch:
             newGeneration.append(child1)
             newGeneration.append(child2)
 
-        self.ILS(newGeneration)
+        if (round(np.random.random(1)[0], 2)) < Constants.LOCAL_SEARCH_RATE.value:
+            self.ILS(newGeneration)
+
         self.repopulate(newGeneration)
 
     def crossover(self, chromosome1: Chromosome, chromosome2: Chromosome):

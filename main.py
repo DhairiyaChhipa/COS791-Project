@@ -10,7 +10,7 @@ np.random.seed(seed)
 
 def main():
     image = cv2.imread('dataset/022.png', cv2.IMREAD_GRAYSCALE)
-    threshold_count = 5
+    threshold_count = 2
     kapur = Kapur(image)
     ga = GANS(image, threshold_count, kapur)
     best = ga.start()
