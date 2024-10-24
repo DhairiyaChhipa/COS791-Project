@@ -87,45 +87,40 @@ class GeneticAlgorithmNeighbourSearch:
         randomIndex = np.random.randint(0, len(population))
         temp = Chromosome(self._kapur, thresholds=population[randomIndex].thresholds, fitness=population[randomIndex].fitness)
         currSolution = self.localSearch(temp) # local search
-        # print(currSolution.thresholds)
 
         for _ in range(int(Constants.LOCAL_ITERATIONS.value)):
-            # print("\n-----------------")
-
             solution = self.perturbation(currSolution) # perturbation
-            # print(solution.thresholds)
             newSolution = self.localSearch(solution) # local search            
-            # print(newSolution.thresholds)
-
-            # print("-----------------\n")
 
             if self.compareFitness(newSolution, currSolution): # acceptance criteria
                 currSolution = newSolution
 
-        # CHECK IF FITNESS FUNCTION GETS PROPERLY UPDATED
-
         if self.compareFitness(currSolution, population[randomIndex]):
-            print("============================== Improvement")
+            # print("============================== Improvement")
             population[randomIndex] = currSolution
     
     def localSearch(self, chromosone : Chromosome):
         length = len(chromosone.thresholds)
-        index = np.random.randint(0, length)
-        thresholdRange = np.random.choice([-1, 1])
 
-        if (index == 0):
-            chromosone.thresholds[index] = min(max(1, chromosone.thresholds[index] + thresholdRange), chromosone.thresholds[index + 1] - 1)
-        elif (index == length - 1):
-            chromosone.thresholds[index] = max(min(254, chromosone.thresholds[index] + thresholdRange), chromosone.thresholds[index - 1])
-        else:
-            lower = chromosone.thresholds[index - 1] + 1
-            upper = chromosone.thresholds[index + 1] - 1
-            chromosone.thresholds[index] = min(max(chromosone.thresholds[index] + thresholdRange, lower), upper)
+        for index in range(length):
+        # index = np.random.randint(0, length)
+            thresholdRange = np.random.choice([-1, 1])
+            if (index == 0):
+                chromosone.thresholds[index] = min(max(1, chromosone.thresholds[index] + thresholdRange), chromosone.thresholds[index + 1] - 1)
+            elif (index == length - 1):
+                chromosone.thresholds[index] = max(min(254, chromosone.thresholds[index] + thresholdRange), chromosone.thresholds[index - 1])
+            else:
+                lower = chromosone.thresholds[index - 1] + 1
+                upper = chromosone.thresholds[index + 1] - 1
+                chromosone.thresholds[index] = min(max(chromosone.thresholds[index] + thresholdRange, lower), upper)
 
+        chromosone.calculateFitness()
         return chromosone
     
     def perturbation(self, chromosone : Chromosome):
-        length = len(chromosone.thresholds) - 1
+        chromosoneCopy = Chromosome(self._kapur, thresholds=chromosone.thresholds, fitness=chromosone.fitness)
+
+        length = len(chromosoneCopy.thresholds) - 1
         index = np.random.randint(0, length + 1)
         newThreshold = None
         lower = 0
@@ -133,21 +128,23 @@ class GeneticAlgorithmNeighbourSearch:
 
         if (index == 0):
             lower = 1
-            upper = chromosone.thresholds[index + 1]
+            upper = chromosoneCopy.thresholds[index + 1]
             newThreshold = np.random.randint(lower, upper)
 
         elif (index == length):
-            lower = chromosone.thresholds[index - 1] + 1
+            lower = chromosoneCopy.thresholds[index - 1] + 1
             upper = 255
 
         elif (index > 0 and index < length):
-            lower = chromosone.thresholds[index - 1] + 1
-            upper = chromosone.thresholds[index + 1]
+            lower = chromosoneCopy.thresholds[index - 1] + 1
+            upper = chromosoneCopy.thresholds[index + 1]
 
         newThreshold = np.random.randint(lower, upper)
-        chromosone.thresholds[index] = newThreshold
+        chromosoneCopy.thresholds[index] = newThreshold
 
-        return chromosone
+        chromosoneCopy.calculateFitness()
+
+        return chromosoneCopy
 
     def mutation(self, thresholds: list):
         # Random mutation
