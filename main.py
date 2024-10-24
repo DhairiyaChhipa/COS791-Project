@@ -5,7 +5,8 @@ from GA import GeneticAlgorithm as GA
 from GANS import GeneticAlgorithmNeighbourSearch as GANS
 from Kapur import Kapur
 
-seed = np.random.randint(0, 1000)
+# seed = np.random.randint(0, 1000)
+seed = 372
 np.random.seed(seed)
 
 def main():
@@ -16,6 +17,7 @@ def main():
     best = ga.start()
     print(best.thresholds)
     print(round(best.fitness, 4))
+    print("seed:", seed)
     colour_image = kapur.buildColorImage(image, best.thresholds)
     plt.imshow(colour_image)
     plt.show()

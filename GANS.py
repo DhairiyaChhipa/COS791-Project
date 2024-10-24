@@ -91,37 +91,31 @@ class GeneticAlgorithmNeighbourSearch:
         return childThresholds1, childThresholds2
 
     def ILS(self, population: list):
-        # alteredIndices = []
-        # counter = 0
-
-        # while counter < 1:
-            # randomIndex = np.random.randint(0, len(population))
-
         index = 0
-        for y in range(1, len(population)):
+        for y in range(1, len(population)): # pick worst individual from the population
             if (population[y].fitness < population[index].fitness):
                 index = y
 
-        # if index not in alteredIndices:
-        temp = Chromosome(self._kapur, thresholds=population[index].thresholds, fitness=population[index].fitness)
-        currSolution = self.localSearch(temp) # local search
+        currSolution = Chromosome(self._kapur, thresholds=population[index].thresholds, fitness=population[index].fitness)
 
         for _ in range(int(Constants.LOCAL_ITERATIONS.value)):
             solution = self.perturbation(currSolution) # perturbation
-            newSolution = self.simulatedAnnealing(solution) # local search            
+            newSolution = self.simulatedAnnealing(solution) # local search
 
             if self.compareFitness(newSolution, currSolution): # acceptance criteria
                 currSolution = newSolution
 
-        if self.compareFitness(currSolution, population[index]):
-            population[index] = currSolution
-
-            # alteredIndices.append(index)
-            # counter += 1
+        # if self.compareFitness(currSolution, population[index]):
+        population[index] = currSolution
     
     def simulatedAnnealing(self, chromosone : Chromosome):
         bestChromosone = chromosone
         temperature = int(Constants.INITIAL_TEMP.value)
+        iteration = 1
+
+        maxStagnation = 40
+        reheatFactor = 0.3
+        stagnationCounter = 0
 
         while (temperature > Constants.STOP_TEMPERATURE.value):
             newChromosone = self.localSearch(bestChromosone)
@@ -129,11 +123,18 @@ class GeneticAlgorithmNeighbourSearch:
 
             if (self.compareFitness(newChromosone, bestChromosone)):
                 bestChromosone = newChromosone
+                stagnationCounter = 0 
             else:
                 if (self.accept(deltaCost, temperature)):
                     bestChromosone = newChromosone
+                stagnationCounter += 1
 
-            temperature *= Constants.COOLING_RATE.value
+            temperature = int(Constants.INITIAL_TEMP.value) * (Constants.COOLING_RATE.value ** iteration)
+            iteration += 1
+
+            if stagnationCounter > maxStagnation:
+                temperature += int(Constants.INITIAL_TEMP.value * reheatFactor)
+                stagnationCounter = 0 
 
         return bestChromosone
     
@@ -151,7 +152,7 @@ class GeneticAlgorithmNeighbourSearch:
         length = len(chromosone.thresholds)
 
         for index in range(length):
-            thresholdRange = np.random.choice([-2, 2])
+            thresholdRange = np.random.choice([-1, 1])
             if (index == 0):
                 chromosone.thresholds[index] = min(max(1, chromosone.thresholds[index] + thresholdRange), chromosone.thresholds[index + 1] - 1)
             elif (index == length - 1):
@@ -166,31 +167,40 @@ class GeneticAlgorithmNeighbourSearch:
     
     def perturbation(self, chromosone : Chromosome):
         chromosoneCopy = Chromosome(self._kapur, thresholds=chromosone.thresholds, fitness=chromosone.fitness)
-
         length = len(chromosoneCopy.thresholds) - 1
-        index = np.random.randint(0, length + 1)
-        newThreshold = None
-        lower = 0
-        upper = 0
 
-        if (index == 0):
-            lower = 1
-            upper = chromosoneCopy.thresholds[index + 1]
-            newThreshold = np.random.randint(lower, upper)
+        counter = 0
+        modifiedIndices = []
 
-        elif (index == length):
-            lower = chromosoneCopy.thresholds[index - 1] + 1
-            upper = 255
+        while counter < (length + 1) // 2:
+            index = np.random.randint(0, length + 1)
 
-        elif (index > 0 and index < length):
-            lower = chromosoneCopy.thresholds[index - 1] + 1
-            upper = chromosoneCopy.thresholds[index + 1]
-            if (lower >= upper):
-                lower = upper - 1
+            if index not in modifiedIndices:
+                newThreshold = None
+                lower = 0
+                upper = 0
 
-        newThreshold = np.random.randint(lower, upper)
-        chromosoneCopy.thresholds[index] = newThreshold
+                if (index == 0):
+                    lower = 1
+                    upper = chromosoneCopy.thresholds[index + 1]
+                    newThreshold = np.random.randint(lower, upper)
 
+                elif (index == length):
+                    lower = chromosoneCopy.thresholds[index - 1] + 1
+                    upper = 255
+
+                elif (index > 0 and index < length):
+                    lower = chromosoneCopy.thresholds[index - 1] + 1
+                    upper = chromosoneCopy.thresholds[index + 1]
+                    if (lower >= upper):
+                        lower = upper - 1
+
+                newThreshold = np.random.randint(lower, upper)
+                chromosoneCopy.thresholds[index] = newThreshold
+                
+                modifiedIndices.append(index)
+                counter += 1
+            
         chromosoneCopy.calculateFitness()
 
         return chromosoneCopy
