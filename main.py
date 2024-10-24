@@ -9,13 +9,13 @@ seed = np.random.randint(0, 1000)
 np.random.seed(seed)
 
 def main():
-    image = cv2.imread('dataset/022.png', cv2.IMREAD_GRAYSCALE)
-    threshold_count = 2
+    image = cv2.imread('dataset/042.png', cv2.IMREAD_GRAYSCALE)
+    threshold_count = 5
     kapur = Kapur(image)
     ga = GANS(image, threshold_count, kapur)
     best = ga.start()
     print(best.thresholds)
-    print(best.fitness)
+    print(round(best.fitness, 4))
     colour_image = kapur.buildColorImage(image, best.thresholds)
     plt.imshow(colour_image)
     plt.show()

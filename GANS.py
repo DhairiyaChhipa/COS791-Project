@@ -1,3 +1,4 @@
+import math
 import numpy as np
 from enum import Enum
 from Chromosome import Chromosome
@@ -6,14 +7,18 @@ from Kapur import Kapur
 class Constants(Enum):
     CROSSOVER_RATE = 0.7
     MUTATION_RATE = 0.3
-    LOCAL_SEARCH_RATE = 0.4
     GENERATIONS = 100
-    LOCAL_ITERATIONS = 30
     POPULATION_SIZE = 26
     ELITIST_SIZE = 4
     TOURNAMENT_SIZE = 5
     SELECTION_SIZE = (POPULATION_SIZE / 2) + 1
     MUTATION_STRATEGY = 0  # 0 = +- 10, 1 = random int (1, 254)
+
+    LOCAL_ITERATIONS = 30
+    LOCAL_SEARCH_RATE = 0.3
+    COOLING_RATE = 0.7
+    INITIAL_TEMP = 100
+    STOP_TEMPERATURE = 1
 
 class GeneticAlgorithmNeighbourSearch:
     def __init__(self, image, threshold_count: int, kapur: Kapur):
@@ -40,7 +45,7 @@ class GeneticAlgorithmNeighbourSearch:
         for _ in range(int(Constants.GENERATIONS.value)):
             self.propagate()
             bestIndividual = self.getBest(self._generation, int(Constants.POPULATION_SIZE.value))
-            print("best fitness: ", bestIndividual.fitness)
+            print("best fitness: ", round(bestIndividual.fitness, 4))
 
         return bestIndividual
 
@@ -86,26 +91,66 @@ class GeneticAlgorithmNeighbourSearch:
         return childThresholds1, childThresholds2
 
     def ILS(self, population: list):
-        randomIndex = np.random.randint(0, len(population))
-        temp = Chromosome(self._kapur, thresholds=population[randomIndex].thresholds, fitness=population[randomIndex].fitness)
-        currSolution = self.localSearch(temp) # local search
+        alteredIndices = []
+        counter = 0
 
-        for _ in range(int(Constants.LOCAL_ITERATIONS.value)):
-            solution = self.perturbation(currSolution) # perturbation
-            newSolution = self.localSearch(solution) # local search            
+        while counter < 1:
+            # randomIndex = np.random.randint(0, len(population))
 
-            if self.compareFitness(newSolution, currSolution): # acceptance criteria
-                currSolution = newSolution
+            index = 0
+            for y in range(1, len(population)):
+                if (population[y].fitness < population[index].fitness):
+                    index = y
 
-        if self.compareFitness(currSolution, population[randomIndex]):
-            # print("============================== Improvement")
-            population[randomIndex] = currSolution
+            if index not in alteredIndices:
+                temp = Chromosome(self._kapur, thresholds=population[index].thresholds, fitness=population[index].fitness)
+                currSolution = self.localSearch(temp) # local search
+
+                for _ in range(int(Constants.LOCAL_ITERATIONS.value)):
+                    solution = self.perturbation(currSolution) # perturbation
+                    newSolution = self.simulatedAnnealing(solution) # local search            
+
+                    if self.compareFitness(newSolution, currSolution): # acceptance criteria
+                        currSolution = newSolution
+
+                if self.compareFitness(currSolution, population[index]):
+                    population[index] = currSolution
+
+            alteredIndices.append(index)
+            counter += 1
     
+    def simulatedAnnealing(self, chromosone : Chromosome):
+        bestChromosone = chromosone
+        temperature = int(Constants.INITIAL_TEMP.value)
+
+        while (temperature > Constants.STOP_TEMPERATURE.value):
+            newChromosone = self.localSearch(bestChromosone)
+            deltaCost = newChromosone.fitness - bestChromosone.fitness
+
+            if (self.compareFitness(newChromosone, bestChromosone)):
+                bestChromosone = newChromosone
+            else:
+                if (self.accept(deltaCost, temperature)):
+                    bestChromosone = newChromosone
+
+            temperature *= Constants.COOLING_RATE.value
+
+        return bestChromosone
+    
+    def accept(self, delta, temperature):
+        if delta < 0:
+            return True
+        else:
+            randomValue = round(np.random.random(1)[0], 2)
+            if (randomValue < math.exp(-delta / temperature)):
+                return True
+            else:
+                return False
+
     def localSearch(self, chromosone : Chromosome):
         length = len(chromosone.thresholds)
 
         for index in range(length):
-        # index = np.random.randint(0, length)
             thresholdRange = np.random.choice([-1, 1])
             if (index == 0):
                 chromosone.thresholds[index] = min(max(1, chromosone.thresholds[index] + thresholdRange), chromosone.thresholds[index + 1] - 1)
@@ -140,6 +185,8 @@ class GeneticAlgorithmNeighbourSearch:
         elif (index > 0 and index < length):
             lower = chromosoneCopy.thresholds[index - 1] + 1
             upper = chromosoneCopy.thresholds[index + 1]
+            if (lower >= upper):
+                lower = upper - 1
 
         newThreshold = np.random.randint(lower, upper)
         chromosoneCopy.thresholds[index] = newThreshold
