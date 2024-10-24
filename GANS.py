@@ -15,7 +15,7 @@ class Constants(Enum):
     MUTATION_STRATEGY = 0  # 0 = +- 10, 1 = random int (1, 254)
 
     LOCAL_ITERATIONS = 30
-    LOCAL_SEARCH_RATE = 0.3
+    LOCAL_SEARCH_RATE = 0.2
     COOLING_RATE = 0.7
     INITIAL_TEMP = 100
     STOP_TEMPERATURE = 1
@@ -91,33 +91,33 @@ class GeneticAlgorithmNeighbourSearch:
         return childThresholds1, childThresholds2
 
     def ILS(self, population: list):
-        alteredIndices = []
-        counter = 0
+        # alteredIndices = []
+        # counter = 0
 
-        while counter < 1:
+        # while counter < 1:
             # randomIndex = np.random.randint(0, len(population))
 
-            index = 0
-            for y in range(1, len(population)):
-                if (population[y].fitness < population[index].fitness):
-                    index = y
+        index = 0
+        for y in range(1, len(population)):
+            if (population[y].fitness < population[index].fitness):
+                index = y
 
-            if index not in alteredIndices:
-                temp = Chromosome(self._kapur, thresholds=population[index].thresholds, fitness=population[index].fitness)
-                currSolution = self.localSearch(temp) # local search
+        # if index not in alteredIndices:
+        temp = Chromosome(self._kapur, thresholds=population[index].thresholds, fitness=population[index].fitness)
+        currSolution = self.localSearch(temp) # local search
 
-                for _ in range(int(Constants.LOCAL_ITERATIONS.value)):
-                    solution = self.perturbation(currSolution) # perturbation
-                    newSolution = self.simulatedAnnealing(solution) # local search            
+        for _ in range(int(Constants.LOCAL_ITERATIONS.value)):
+            solution = self.perturbation(currSolution) # perturbation
+            newSolution = self.simulatedAnnealing(solution) # local search            
 
-                    if self.compareFitness(newSolution, currSolution): # acceptance criteria
-                        currSolution = newSolution
+            if self.compareFitness(newSolution, currSolution): # acceptance criteria
+                currSolution = newSolution
 
-                if self.compareFitness(currSolution, population[index]):
-                    population[index] = currSolution
+        if self.compareFitness(currSolution, population[index]):
+            population[index] = currSolution
 
-            alteredIndices.append(index)
-            counter += 1
+            # alteredIndices.append(index)
+            # counter += 1
     
     def simulatedAnnealing(self, chromosone : Chromosome):
         bestChromosone = chromosone
@@ -151,7 +151,7 @@ class GeneticAlgorithmNeighbourSearch:
         length = len(chromosone.thresholds)
 
         for index in range(length):
-            thresholdRange = np.random.choice([-1, 1])
+            thresholdRange = np.random.choice([-2, 2])
             if (index == 0):
                 chromosone.thresholds[index] = min(max(1, chromosone.thresholds[index] + thresholdRange), chromosone.thresholds[index + 1] - 1)
             elif (index == length - 1):
