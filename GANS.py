@@ -85,33 +85,42 @@ class GeneticAlgorithmNeighbourSearch:
 
     def ILS(self, population: list):
         randomIndex = np.random.randint(0, len(population))
-        currSolution = self.localSearch(population[randomIndex].copy()) # local search
+        temp = Chromosome(self._kapur, thresholds=population[randomIndex].thresholds, fitness=population[randomIndex].fitness)
+        currSolution = self.localSearch(temp) # local search
+        # print(currSolution.thresholds)
 
         for _ in range(int(Constants.LOCAL_ITERATIONS.value)):
+            # print("\n-----------------")
+
             solution = self.perturbation(currSolution) # perturbation
-            newSolution = self.localSearch(solution) # local search
+            # print(solution.thresholds)
+            newSolution = self.localSearch(solution) # local search            
+            # print(newSolution.thresholds)
+
+            # print("-----------------\n")
 
             if self.compareFitness(newSolution, currSolution): # acceptance criteria
                 currSolution = newSolution
 
+        # CHECK IF FITNESS FUNCTION GETS PROPERLY UPDATED
+
         if self.compareFitness(currSolution, population[randomIndex]):
+            print("============================== Improvement")
             population[randomIndex] = currSolution
     
     def localSearch(self, chromosone : Chromosome):
         length = len(chromosone.thresholds)
         index = np.random.randint(0, length)
         thresholdRange = np.random.choice([-1, 1])
-        
+
         if (index == 0):
-            chromosone.thresholds[index] = max(1, chromosone.thresholds[index] + thresholdRange)
+            chromosone.thresholds[index] = min(max(1, chromosone.thresholds[index] + thresholdRange), chromosone.thresholds[index + 1] - 1)
         elif (index == length - 1):
-            chromosone.thresholds[index] = min(254, chromosone.thresholds[index] + thresholdRange)
+            chromosone.thresholds[index] = max(min(254, chromosone.thresholds[index] + thresholdRange), chromosone.thresholds[index - 1])
         else:
             lower = chromosone.thresholds[index - 1] + 1
             upper = chromosone.thresholds[index + 1] - 1
             chromosone.thresholds[index] = min(max(chromosone.thresholds[index] + thresholdRange, lower), upper)
-        
-        chromosone.calculateFitness()
 
         return chromosone
     
@@ -119,26 +128,23 @@ class GeneticAlgorithmNeighbourSearch:
         length = len(chromosone.thresholds) - 1
         index = np.random.randint(0, length + 1)
         newThreshold = None
+        lower = 0
+        upper = 0
 
         if (index == 0):
-            newThreshold = chromosone.thresholds[index + 1] - 1
-            if (newThreshold < 1):
-                newThreshold = 1
+            lower = 1
+            upper = chromosone.thresholds[index + 1]
+            newThreshold = np.random.randint(lower, upper)
 
         elif (index == length):
             lower = chromosone.thresholds[index - 1] + 1
-            upper = 254
-            newThreshold = lower + 1
-            if (lower >= upper):
-                newThreshold = 254
+            upper = 255
 
         elif (index > 0 and index < length):
             lower = chromosone.thresholds[index - 1] + 1
             upper = chromosone.thresholds[index + 1]
-            newThreshold = lower + 1
-            if (newThreshold >= upper):
-                newThreshold = upper - 1
 
+        newThreshold = np.random.randint(lower, upper)
         chromosone.thresholds[index] = newThreshold
 
         return chromosone
