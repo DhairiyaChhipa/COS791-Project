@@ -6,7 +6,9 @@ from Kapur import Kapur
 class Constants(Enum):
     CROSSOVER_RATE = 0.7
     MUTATION_RATE = 0.3
+    # LOCAL_SEARCH_RATE = 0.4
     GENERATIONS = 100
+    LOCAL_ITERATIONS = 30
     POPULATION_SIZE = 26
     ELITIST_SIZE = 4
     TOURNAMENT_SIZE = 5
@@ -42,7 +44,7 @@ class GeneticAlgorithmNeighbourSearch:
 
         return bestIndividual
 
-    def propagate(self):  # handles selection and repopulation
+    def propagate(self):  # handles selection, repopulation and local search
         tournamentGeneration = self.tournamentSelection()
         newGeneration = []
 
@@ -51,10 +53,10 @@ class GeneticAlgorithmNeighbourSearch:
             parent2 = i + 1
             child1Thresholds, child2Thresholds = tournamentGeneration[parent1].copyThresholds(), tournamentGeneration[parent2].copyThresholds()
 
-            if (np.random.randint(0, 1)) < Constants.CROSSOVER_RATE.value:  # check if crossover can be done
+            if (round(np.random.random(1)[0], 2)) < Constants.CROSSOVER_RATE.value:  # check if crossover can be done
                 child1Thresholds, child2Thresholds = self.crossover(tournamentGeneration[parent1], tournamentGeneration[parent2])
 
-            if (np.random.randint(0, 1)) < Constants.MUTATION_RATE.value:  # check if mutation can be done
+            if (round(np.random.random(1)[0], 2)) < Constants.MUTATION_RATE.value:  # check if mutation can be done
                 child1Thresholds = self.mutation(child1Thresholds)
                 child2Thresholds = self.mutation(child2Thresholds)
 
@@ -67,6 +69,7 @@ class GeneticAlgorithmNeighbourSearch:
             newGeneration.append(child1)
             newGeneration.append(child2)
 
+        self.ILS(newGeneration)
         self.repopulate(newGeneration)
 
     def crossover(self, chromosome1: Chromosome, chromosome2: Chromosome):
@@ -80,8 +83,65 @@ class GeneticAlgorithmNeighbourSearch:
 
         return childThresholds1, childThresholds2
 
-    def ILS(self, list: list):
-        return None
+    def ILS(self, population: list):
+        randomIndex = np.random.randint(0, len(population))
+        currSolution = self.localSearch(population[randomIndex].copy()) # local search
+
+        for _ in range(int(Constants.LOCAL_ITERATIONS.value)):
+            solution = self.perturbation(currSolution) # perturbation
+            newSolution = self.localSearch(solution) # local search
+
+            if self.compareFitness(newSolution, currSolution): # acceptance criteria
+                currSolution = newSolution
+
+        if self.compareFitness(currSolution, population[randomIndex]):
+            population[randomIndex] = currSolution
+    
+    def localSearch(self, chromosone : Chromosome):
+        length = len(chromosone.thresholds)
+        index = np.random.randint(0, length)
+        thresholdRange = np.random.choice([-1, 1])
+        
+        if (index == 0):
+            chromosone.thresholds[index] = max(1, chromosone.thresholds[index] + thresholdRange)
+        elif (index == length - 1):
+            chromosone.thresholds[index] = min(254, chromosone.thresholds[index] + thresholdRange)
+        else:
+            lower = chromosone.thresholds[index - 1] + 1
+            upper = chromosone.thresholds[index + 1] - 1
+            chromosone.thresholds[index] = min(max(chromosone.thresholds[index] + thresholdRange, lower), upper)
+        
+        chromosone.calculateFitness()
+
+        return chromosone
+    
+    def perturbation(self, chromosone : Chromosome):
+        length = len(chromosone.thresholds) - 1
+        index = np.random.randint(0, length + 1)
+        newThreshold = None
+
+        if (index == 0):
+            newThreshold = chromosone.thresholds[index + 1] - 1
+            if (newThreshold < 1):
+                newThreshold = 1
+
+        elif (index == length):
+            lower = chromosone.thresholds[index - 1] + 1
+            upper = 254
+            newThreshold = lower + 1
+            if (lower >= upper):
+                newThreshold = 254
+
+        elif (index > 0 and index < length):
+            lower = chromosone.thresholds[index - 1] + 1
+            upper = chromosone.thresholds[index + 1]
+            newThreshold = lower + 1
+            if (newThreshold >= upper):
+                newThreshold = upper - 1
+
+        chromosone.thresholds[index] = newThreshold
+
+        return chromosone
 
     def mutation(self, thresholds: list):
         # Random mutation
@@ -90,9 +150,9 @@ class GeneticAlgorithmNeighbourSearch:
 
         if Constants.MUTATION_STRATEGY.value == 0:
             childThresholds[index] = np.clip(
-                thresholds[index] + np.random.randint(-10, 10), 1, 254)
+                thresholds[index] + np.random.randint(-10, 10), 1, 255)
         elif Constants.MUTATION_STRATEGY.value == 1:
-            childThresholds[index] = np.random.randint(1, 254)
+            childThresholds[index] = np.random.randint(1, 255)
 
         return childThresholds
     

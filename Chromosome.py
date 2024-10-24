@@ -38,3 +38,6 @@ class Chromosome:
         for threshold in self.thresholds:
             threshold_copy.append(threshold)
         return threshold_copy
+
+    def calculateFitness(self):
+        self.fitness = self.kapur.run(self.thresholds)
