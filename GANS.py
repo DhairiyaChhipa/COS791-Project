@@ -113,28 +113,18 @@ class GeneticAlgorithmNeighbourSearch:
         temperature = int(Constants.INITIAL_TEMP.value)
         iteration = 1
 
-        maxStagnation = 40
-        reheatFactor = 0.3
-        stagnationCounter = 0
-
         while (temperature > Constants.STOP_TEMPERATURE.value):
             newChromosone = self.localSearch(bestChromosone)
             deltaCost = newChromosone.fitness - bestChromosone.fitness
 
             if (self.compareFitness(newChromosone, bestChromosone)):
                 bestChromosone = newChromosone
-                stagnationCounter = 0 
             else:
                 if (self.accept(deltaCost, temperature)):
                     bestChromosone = newChromosone
-                stagnationCounter += 1
 
             temperature = int(Constants.INITIAL_TEMP.value) * (Constants.COOLING_RATE.value ** iteration)
             iteration += 1
-
-            if stagnationCounter > maxStagnation:
-                temperature += int(Constants.INITIAL_TEMP.value * reheatFactor)
-                stagnationCounter = 0 
 
         return bestChromosone
     
@@ -150,57 +140,77 @@ class GeneticAlgorithmNeighbourSearch:
 
     def localSearch(self, chromosone : Chromosome):
         length = len(chromosone.thresholds)
+        bestFitness = chromosone.fitness
 
         for index in range(length):
-            thresholdRange = np.random.choice([-1, 1])
-            if (index == 0):
-                chromosone.thresholds[index] = min(max(1, chromosone.thresholds[index] + thresholdRange), chromosone.thresholds[index + 1] - 1)
-            elif (index == length - 1):
-                chromosone.thresholds[index] = max(min(254, chromosone.thresholds[index] + thresholdRange), chromosone.thresholds[index - 1])
-            else:
-                lower = chromosone.thresholds[index - 1] + 1
-                upper = chromosone.thresholds[index + 1] - 1
-                chromosone.thresholds[index] = min(max(chromosone.thresholds[index] + thresholdRange, lower), upper)
+            currentThreshold = chromosone.thresholds[index]
+            bestThreshold = currentThreshold
+
+            for thresholdRange in [-1, 1]:
+                newThreshold = 0
+
+                if (index == 0):
+                    newThreshold = min(max(1, chromosone.thresholds[index] + thresholdRange), chromosone.thresholds[index + 1] - 1)
+                elif (index == length - 1):
+                    newThreshold = max(min(254, chromosone.thresholds[index] + thresholdRange), chromosone.thresholds[index - 1])
+                else:
+                    lower = chromosone.thresholds[index - 1] + 1
+                    upper = chromosone.thresholds[index + 1] - 1
+                    newThreshold = min(max(chromosone.thresholds[index] + thresholdRange, lower), upper)
+
+                originalThreshold = chromosone.thresholds[index]
+                chromosone.thresholds[index] = newThreshold
+                chromosone.calculateFitness()
+
+                if chromosone.fitness > bestFitness:
+                    bestFitness = chromosone.fitness
+                    bestThreshold = newThreshold
+                chromosone.thresholds[index] = originalThreshold
+
+            chromosone.thresholds[index] = bestThreshold
 
         chromosone.calculateFitness()
+
+        # for index in range(length):
+        #     thresholdRange = np.random.choice([-k, k])
+        #     if (index == 0):
+        #         chromosone.thresholds[index] = min(max(1, chromosone.thresholds[index] + thresholdRange), chromosone.thresholds[index + 1] - 1)
+        #     elif (index == length - 1):
+        #         chromosone.thresholds[index] = max(min(254, chromosone.thresholds[index] + thresholdRange), chromosone.thresholds[index - 1])
+        #     else:
+        #         lower = chromosone.thresholds[index - 1] + 1
+        #         upper = chromosone.thresholds[index + 1] - 1
+        #         chromosone.thresholds[index] = min(max(chromosone.thresholds[index] + thresholdRange, lower), upper)
+
+        # chromosone.calculateFitness()
         return chromosone
     
     def perturbation(self, chromosone : Chromosome):
         chromosoneCopy = Chromosome(self._kapur, thresholds=chromosone.thresholds, fitness=chromosone.fitness)
         length = len(chromosoneCopy.thresholds) - 1
+        index = np.random.randint(0, length + 1)
+        newThreshold = None
+        lower = 0
+        upper = 0
 
-        counter = 0
-        modifiedIndices = []
+        if (index == 0):
+            lower = 1
+            upper = chromosoneCopy.thresholds[index + 1]
+            newThreshold = np.random.randint(lower, upper)
 
-        while counter < (length + 1) // 2:
-            index = np.random.randint(0, length + 1)
+        elif (index == length):
+            lower = chromosoneCopy.thresholds[index - 1] + 1
+            upper = 255
 
-            if index not in modifiedIndices:
-                newThreshold = None
-                lower = 0
-                upper = 0
+        elif (index > 0 and index < length):
+            lower = chromosoneCopy.thresholds[index - 1] + 1
+            upper = chromosoneCopy.thresholds[index + 1]
+            if (lower >= upper):
+                lower = upper - 1
 
-                if (index == 0):
-                    lower = 1
-                    upper = chromosoneCopy.thresholds[index + 1]
-                    newThreshold = np.random.randint(lower, upper)
+        newThreshold = np.random.randint(lower, upper)
+        chromosoneCopy.thresholds[index] = newThreshold
 
-                elif (index == length):
-                    lower = chromosoneCopy.thresholds[index - 1] + 1
-                    upper = 255
-
-                elif (index > 0 and index < length):
-                    lower = chromosoneCopy.thresholds[index - 1] + 1
-                    upper = chromosoneCopy.thresholds[index + 1]
-                    if (lower >= upper):
-                        lower = upper - 1
-
-                newThreshold = np.random.randint(lower, upper)
-                chromosoneCopy.thresholds[index] = newThreshold
-                
-                modifiedIndices.append(index)
-                counter += 1
-            
         chromosoneCopy.calculateFitness()
 
         return chromosoneCopy
