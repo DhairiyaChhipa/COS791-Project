@@ -6,11 +6,10 @@ from GANS import GeneticAlgorithmNeighbourSearch as GANS
 from Kapur import Kapur
 
 seed = np.random.randint(0, 1000)
-# seed = 372
 np.random.seed(seed)
 
 def main():
-    image = cv2.imread('dataset/042.png', cv2.IMREAD_GRAYSCALE)
+    image = cv2.imread('dataset/062.png', cv2.IMREAD_GRAYSCALE)
     threshold_count = 5
     kapur = Kapur(image)
     ga = GANS(image, threshold_count, kapur)

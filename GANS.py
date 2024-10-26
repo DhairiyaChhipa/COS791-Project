@@ -1,24 +1,21 @@
 import math
+from colorama import Fore, Style
 import numpy as np
 from enum import Enum
 from Chromosome import Chromosome
 from Kapur import Kapur
 
 class Constants(Enum):
-    CROSSOVER_RATE = 0.7
-    MUTATION_RATE = 0.3
+    CROSSOVER_RATE = 0.6
+    MUTATION_RATE = 0.4
     GENERATIONS = 100
     POPULATION_SIZE = 26
     ELITIST_SIZE = 4
     TOURNAMENT_SIZE = 5
     SELECTION_SIZE = (POPULATION_SIZE / 2) + 1
     MUTATION_STRATEGY = 0  # 0 = +- 10, 1 = random int (1, 254)
-
     LOCAL_ITERATIONS = 30
-    LOCAL_SEARCH_RATE = 0.2
-    COOLING_RATE = 0.7
-    INITIAL_TEMP = 100
-    STOP_TEMPERATURE = 1
+    LOCAL_SEARCH_RATE = 0.3
 
 class GeneticAlgorithmNeighbourSearch:
     def __init__(self, image, threshold_count: int, kapur: Kapur):
@@ -26,6 +23,7 @@ class GeneticAlgorithmNeighbourSearch:
         self._image = image
         self._threshold_count = threshold_count
         self._kapur = kapur
+        self._bestIndividial = None
 
     # def __del__(self):
     #     # print("Constants.POPULATION_SIZE.value", Constants.POPULATION_SIZE.value)
@@ -44,10 +42,14 @@ class GeneticAlgorithmNeighbourSearch:
         bestIndividual = None
         for _ in range(int(Constants.GENERATIONS.value)):
             self.propagate()
-            bestIndividual = self.getBest(self._generation, int(Constants.POPULATION_SIZE.value))
-            print("best fitness: ", round(bestIndividual.fitness, 4))
 
-        return bestIndividual
+            bestGlobal = self.getBestIndividual()
+            print("Best fitness overall:", round(bestGlobal.fitness, 4))
+
+            # bestLocal = self.getBest(self._generation)
+            # print("Best fitness this generation:", round(bestLocal.fitness, 4), "\n")
+
+        return bestGlobal
 
     def propagate(self):  # handles selection, repopulation and local search
         tournamentGeneration = self.tournamentSelection()
@@ -75,7 +77,9 @@ class GeneticAlgorithmNeighbourSearch:
             newGeneration.append(child2)
 
         if (round(np.random.random(1)[0], 2)) < Constants.LOCAL_SEARCH_RATE.value:
-            self.ILS(newGeneration)
+            newGeneration = self.ILS(newGeneration)
+
+        newGeneration = self.eliteSelection(newGeneration)
 
         self.repopulate(newGeneration)
 
@@ -92,97 +96,62 @@ class GeneticAlgorithmNeighbourSearch:
 
     def ILS(self, population: list):
         index = 0
-        for y in range(1, len(population)): # pick worst individual from the population
-            if (population[y].fitness < population[index].fitness):
+        for y in range(1, len(population)): # pick best individual from the population
+            if self.compareFitness(population[y], population[index]):
                 index = y
 
         currSolution = Chromosome(self._kapur, thresholds=population[index].thresholds, fitness=population[index].fitness)
 
         for _ in range(int(Constants.LOCAL_ITERATIONS.value)):
             solution = self.perturbation(currSolution) # perturbation
-            newSolution = self.simulatedAnnealing(solution) # local search
+            newSolution = self.localSearch(solution) # local search
 
             if self.compareFitness(newSolution, currSolution): # acceptance criteria
                 currSolution = newSolution
 
-        # if self.compareFitness(currSolution, population[index]):
-        population[index] = currSolution
+        if self.compareFitness(currSolution, population[index]):
+            population[index] = currSolution
+
+        return population
     
-    def simulatedAnnealing(self, chromosone : Chromosome):
-        bestChromosone = chromosone
-        temperature = int(Constants.INITIAL_TEMP.value)
-        iteration = 1
-
-        while (temperature > Constants.STOP_TEMPERATURE.value):
-            newChromosone = self.localSearch(bestChromosone)
-            deltaCost = newChromosone.fitness - bestChromosone.fitness
-
-            if (self.compareFitness(newChromosone, bestChromosone)):
-                bestChromosone = newChromosone
-            else:
-                if (self.accept(deltaCost, temperature)):
-                    bestChromosone = newChromosone
-
-            temperature = int(Constants.INITIAL_TEMP.value) * (Constants.COOLING_RATE.value ** iteration)
-            iteration += 1
-
-        return bestChromosone
-    
-    def accept(self, delta, temperature):
-        if delta < 0:
-            return True
-        else:
-            randomValue = round(np.random.random(1)[0], 2)
-            if (randomValue < math.exp(-delta / temperature)):
-                return True
-            else:
-                return False
-
     def localSearch(self, chromosone : Chromosome):
         length = len(chromosone.thresholds)
         bestFitness = chromosone.fitness
+        counter = -length
+        rangeList = []
 
-        for index in range(length):
-            currentThreshold = chromosone.thresholds[index]
-            bestThreshold = currentThreshold
+        while (counter <= length):
+            rangeList.append(counter)
+            counter += 1
 
-            for thresholdRange in [-1, 1]:
-                newThreshold = 0
+        index = np.random.randint(0, length)
+        currentThreshold = chromosone.thresholds[index]
+        bestThreshold = currentThreshold
+        
+        for thresholdRange in rangeList:
+            newThreshold = 0
 
-                if (index == 0):
-                    newThreshold = min(max(1, chromosone.thresholds[index] + thresholdRange), chromosone.thresholds[index + 1] - 1)
-                elif (index == length - 1):
-                    newThreshold = max(min(254, chromosone.thresholds[index] + thresholdRange), chromosone.thresholds[index - 1])
-                else:
-                    lower = chromosone.thresholds[index - 1] + 1
-                    upper = chromosone.thresholds[index + 1] - 1
-                    newThreshold = min(max(chromosone.thresholds[index] + thresholdRange, lower), upper)
+            if (index == 0):
+                newThreshold = min(max(1, chromosone.thresholds[index] + thresholdRange), chromosone.thresholds[index + 1] - 1)
+            elif (index == length - 1):
+                newThreshold = max(min(254, chromosone.thresholds[index] + thresholdRange), chromosone.thresholds[index - 1])
+            else:
+                lower = chromosone.thresholds[index - 1] + 1
+                upper = chromosone.thresholds[index + 1] - 1
+                newThreshold = min(max(chromosone.thresholds[index] + thresholdRange, lower), upper)
 
-                originalThreshold = chromosone.thresholds[index]
-                chromosone.thresholds[index] = newThreshold
-                chromosone.calculateFitness()
+            originalThreshold = chromosone.thresholds[index]
+            chromosone.thresholds[index] = newThreshold
+            chromosone.calculateFitness()
 
-                if chromosone.fitness > bestFitness:
-                    bestFitness = chromosone.fitness
-                    bestThreshold = newThreshold
-                chromosone.thresholds[index] = originalThreshold
+            if chromosone.fitness > bestFitness:
+                bestFitness = chromosone.fitness
+                bestThreshold = newThreshold
+            chromosone.thresholds[index] = originalThreshold
 
-            chromosone.thresholds[index] = bestThreshold
+        chromosone.thresholds[index] = bestThreshold
 
         chromosone.calculateFitness()
-
-        # for index in range(length):
-        #     thresholdRange = np.random.choice([-k, k])
-        #     if (index == 0):
-        #         chromosone.thresholds[index] = min(max(1, chromosone.thresholds[index] + thresholdRange), chromosone.thresholds[index + 1] - 1)
-        #     elif (index == length - 1):
-        #         chromosone.thresholds[index] = max(min(254, chromosone.thresholds[index] + thresholdRange), chromosone.thresholds[index - 1])
-        #     else:
-        #         lower = chromosone.thresholds[index - 1] + 1
-        #         upper = chromosone.thresholds[index + 1] - 1
-        #         chromosone.thresholds[index] = min(max(chromosone.thresholds[index] + thresholdRange, lower), upper)
-
-        # chromosone.calculateFitness()
         return chromosone
     
     def perturbation(self, chromosone : Chromosome):
@@ -242,13 +211,53 @@ class GeneticAlgorithmNeighbourSearch:
                     tournamentCounter += 1
                     tournament.append(randomIndividual)
             
-            bestIndividual = self.getBest(tournament, len(tournament))
+            bestIndividual = self.getBest(tournament)
 
             if bestIndividual not in bestIndividuals:
                 selectionCounter += 1
                 bestIndividuals.append(Chromosome(self._kapur, thresholds=bestIndividual.thresholds, fitness=bestIndividual.fitness))
 
         return bestIndividuals
+
+    def eliteSelection(self, population: list):
+        bestIndividuals = []
+        counter = 0
+
+        # Find best 4 individuals from original population to replace children
+        sortedGeneration = self.reorderList(self.copyGeneration(), len(self._generation))
+        for i in range(4):
+            bestIndividuals.append(sortedGeneration[i])
+        
+        # temp = "("
+        # for i in range(len(population)):
+        #     temp += str(round(population[i].fitness, 4)) + ", "
+        # temp += ")"
+        # print("Length:", len(population))
+        # print(temp)
+        # print("--------------------------------------")
+
+        # Find worst 4 children to replace (penultimate worst) - make sure not to overwrite elites just added in lmao
+        indices = []
+        for i in range(int(Constants.ELITIST_SIZE.value)):
+            worst = 0
+            for y in range(0, len(population)):
+                if worst not in indices and self.compareFitness(population[worst], population[y]):
+                    worst = y
+            indices.append(worst)
+            population[worst] = bestIndividuals[i]
+
+        # temp = "("
+        # for i in range(len(population)):
+        #     if i in indices:
+        #         temp += Fore.RED
+        #     else: 
+        #         temp += Style.RESET_ALL
+        #     temp += str(round(population[i].fitness, 4)) + ", "
+        # temp += Style.RESET_ALL + ")"
+        # print("Length:", len(population))
+        # print(temp, "\n")
+
+        return population
 
     def repopulate(self, newGeneration):
         for x in range(int(Constants.POPULATION_SIZE.value)):
@@ -260,7 +269,6 @@ class GeneticAlgorithmNeighbourSearch:
     def reorderList(self, list, size):
         for i in range(size):
             swapped = False
-
             for j in range(size - i - 1):
                 if self.compareFitness(list[j + 1], list[j]):
                     list[j], list[j + 1] = list[j + 1], list[j]
@@ -268,11 +276,26 @@ class GeneticAlgorithmNeighbourSearch:
 
             if not swapped:
                 break
+        return list
 
-    def getBest(self, list, size):
-        best = list[0]
-        for i in range(1, size):
-            if self.compareFitness(list[i], best):
-                best = list[i]
+    def copyGeneration(self):
+        copy = []
+        for i in range(len(self._generation)):
+            temp = Chromosome(self._kapur, thresholds=self._generation[i].thresholds)
+            copy.append(temp)
+        return copy
 
+    def getBest(self, selection : list):
+        best = selection[0]
+        for i in range(1, len(selection)):
+            if self.compareFitness(selection[i], best):
+                best = selection[i]
         return best
+
+    def getBestIndividual(self):
+        if self._bestIndividial is None:
+            self._bestIndividial = self._generation[0]
+        for i in range(0, int(Constants.POPULATION_SIZE.value)):
+            if self.compareFitness(self._generation[i], self._bestIndividial):
+                self._bestIndividial = self._generation[i]
+        return self._bestIndividial
