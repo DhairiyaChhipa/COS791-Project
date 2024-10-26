@@ -1,3 +1,4 @@
+import heapq
 import math
 from colorama import Fore, Style
 import numpy as np
@@ -6,16 +7,27 @@ from Chromosome import Chromosome
 from Kapur import Kapur
 
 class Constants(Enum):
+    # CROSSOVER_RATE = 0.6
+    # MUTATION_RATE = 0.4
+    # GENERATIONS = 100
+    # POPULATION_SIZE = 16
+    # ELITIST_SIZE = 4
+    # TOURNAMENT_SIZE = 5
+    # SELECTION_SIZE = (POPULATION_SIZE / 2) + 1
+    # LOCAL_ITERATIONS = 20
+    # LOCAL_SEARCH_RATE = 0.3
     CROSSOVER_RATE = 0.6
     MUTATION_RATE = 0.4
     GENERATIONS = 100
-    POPULATION_SIZE = 26
+    POPULATION_SIZE = 20
     ELITIST_SIZE = 4
     TOURNAMENT_SIZE = 5
     SELECTION_SIZE = (POPULATION_SIZE / 2) + 1
-    MUTATION_STRATEGY = 0  # 0 = +- 10, 1 = random int (1, 254)
-    LOCAL_ITERATIONS = 30
-    LOCAL_SEARCH_RATE = 0.3
+    LOCAL_ITERATIONS = 10
+    LOCAL_SEARCH_RATE = 0.2
+    COOLING_RATE = 0.7
+    INITIAL_TEMP = 100
+    STOP_TEMPERATURE = 1
 
 class GeneticAlgorithmNeighbourSearch:
     def __init__(self, image, threshold_count: int, kapur: Kapur):
@@ -39,7 +51,6 @@ class GeneticAlgorithmNeighbourSearch:
         for _ in range(int(Constants.POPULATION_SIZE.value)):  # initialise generation
             self._generation.append(Chromosome(self._kapur, self._threshold_count))
 
-        bestIndividual = None
         for _ in range(int(Constants.GENERATIONS.value)):
             self.propagate()
 
@@ -104,7 +115,7 @@ class GeneticAlgorithmNeighbourSearch:
 
         for _ in range(int(Constants.LOCAL_ITERATIONS.value)):
             solution = self.perturbation(currSolution) # perturbation
-            newSolution = self.localSearch(solution) # local search
+            newSolution = self.simulatedAnnealing(solution) # local search
 
             if self.compareFitness(newSolution, currSolution): # acceptance criteria
                 currSolution = newSolution
@@ -114,6 +125,34 @@ class GeneticAlgorithmNeighbourSearch:
 
         return population
     
+    def simulatedAnnealing(self, chromosone : Chromosome):
+        bestChromosone = chromosone
+        temperature = int(Constants.INITIAL_TEMP.value)
+
+        while (temperature > Constants.STOP_TEMPERATURE.value):
+            newChromosone = self.localSearch(bestChromosone)
+            deltaCost = newChromosone.fitness - bestChromosone.fitness
+
+            if (self.compareFitness(newChromosone, bestChromosone)):
+                bestChromosone = newChromosone
+            else:
+                if (self.accept(deltaCost, temperature)):
+                    bestChromosone = newChromosone
+
+            temperature *= Constants.COOLING_RATE.value
+
+        return bestChromosone
+
+    def accept(self, delta, temperature):
+        if delta < 0:
+            return True
+        else:
+            randomValue = round(np.random.random(1)[0], 2)
+            if (randomValue < math.exp(-delta / temperature)):
+                return True
+            else:
+                return False
+
     def localSearch(self, chromosone : Chromosome):
         length = len(chromosone.thresholds)
         bestFitness = chromosone.fitness
@@ -188,12 +227,8 @@ class GeneticAlgorithmNeighbourSearch:
         # Random mutation
         childThresholds = thresholds
         index = np.random.randint(0, len(thresholds))
-
-        if Constants.MUTATION_STRATEGY.value == 0:
-            childThresholds[index] = np.clip(
-                thresholds[index] + np.random.randint(-10, 10), 1, 255)
-        elif Constants.MUTATION_STRATEGY.value == 1:
-            childThresholds[index] = np.random.randint(1, 255)
+        childThresholds[index] = np.clip(
+            thresholds[index] + np.random.randint(-10, 10), 1, 255)
 
         return childThresholds
     
@@ -220,44 +255,8 @@ class GeneticAlgorithmNeighbourSearch:
         return bestIndividuals
 
     def eliteSelection(self, population: list):
-        bestIndividuals = []
-        counter = 0
-
-        # Find best 4 individuals from original population to replace children
-        sortedGeneration = self.reorderList(self.copyGeneration(), len(self._generation))
-        for i in range(4):
-            bestIndividuals.append(sortedGeneration[i])
-        
-        # temp = "("
-        # for i in range(len(population)):
-        #     temp += str(round(population[i].fitness, 4)) + ", "
-        # temp += ")"
-        # print("Length:", len(population))
-        # print(temp)
-        # print("--------------------------------------")
-
-        # Find worst 4 children to replace (penultimate worst) - make sure not to overwrite elites just added in lmao
-        indices = []
-        for i in range(int(Constants.ELITIST_SIZE.value)):
-            worst = 0
-            for y in range(0, len(population)):
-                if worst not in indices and self.compareFitness(population[worst], population[y]):
-                    worst = y
-            indices.append(worst)
-            population[worst] = bestIndividuals[i]
-
-        # temp = "("
-        # for i in range(len(population)):
-        #     if i in indices:
-        #         temp += Fore.RED
-        #     else: 
-        #         temp += Style.RESET_ALL
-        #     temp += str(round(population[i].fitness, 4)) + ", "
-        # temp += Style.RESET_ALL + ")"
-        # print("Length:", len(population))
-        # print(temp, "\n")
-
-        return population
+        bestIndividuals = heapq.nlargest(Constants.ELITIST_SIZE.value, population, key=lambda x: x.fitness)
+        return bestIndividuals + population[Constants.ELITIST_SIZE.value:]
 
     def repopulate(self, newGeneration):
         for x in range(int(Constants.POPULATION_SIZE.value)):
