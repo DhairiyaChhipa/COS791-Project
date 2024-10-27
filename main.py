@@ -1,6 +1,7 @@
 ﻿import numpy as np
 import cv2
 import matplotlib.pyplot as plt
+from GA import GeneticAlgorithm as GA
 from GANS import GeneticAlgorithmNeighbourSearch as GANS
 from Kapur import Kapur
 
