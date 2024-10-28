@@ -91,7 +91,8 @@ class GeneticAlgorithmNeighbourSearch:
 
         for i in range(crossoverPoint, len(chromosome1.thresholds)):
             childThresholds1[i], childThresholds2[i] = chromosome2.thresholds[i], chromosome1.thresholds[i]
-
+        childThresholds1.sort()
+        childThresholds2.sort()
         return childThresholds1, childThresholds2
 
     def ILS(self, chromosome: Chromosome):
@@ -103,7 +104,7 @@ class GeneticAlgorithmNeighbourSearch:
         # currSolution = Chromosome(self._kapur, thresholds=population[index].thresholds,
         #                           fitness=population[index].fitness)
         currSolution = Chromosome(self._kapur, thresholds=chromosome.thresholds, fitness=chromosome.fitness)
-
+        currSolution = self.localSearch(currSolution)
         for _ in range(int(Constants.LOCAL_ITERATIONS.value)):
             solution = self.perturbation(currSolution)  # perturbation
             newSolution = self.simulatedAnnealing(solution)  # local search
@@ -220,6 +221,7 @@ class GeneticAlgorithmNeighbourSearch:
         childThresholds = thresholds
         index = np.random.randint(0, len(thresholds))
         childThresholds[index] = np.clip(thresholds[index] + np.random.randint(-30, 30), 1, 254)
+        childThresholds.sort()
         return childThresholds
 
     def tournamentSelection(self):
