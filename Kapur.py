@@ -62,7 +62,7 @@ class Kapur(object):
             self._probabilities.update({i: self.histogram[i] / totalPixels})
 
     def buildColorImage(self, image, thresholds):
-        colourImage = np.zeros((image.shape[0], image.shape[1], 3), dtype=np.uint16)
+        colourImage = np.zeros((image.shape[0], image.shape[1], 3), dtype=np.uint8)
         k = len(thresholds)
 
         red = [255, 0, 0]

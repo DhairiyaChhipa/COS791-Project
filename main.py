@@ -52,7 +52,7 @@ def run_trials(dataset, dataset_names, k, kapur, algorithm, file_name):
     k_levels = [2, 3, 4, 5]
     for i, image in enumerate(dataset):
         print(f'Image: {dataset_names[i]}')
-        write_file(f'Results/{file_name}.txt', [f'==> Image: {dataset_names[i]} <=='])
+        write_file(f'Results/{file_name}.txt', [f'===> Image: {dataset_names[i]} <==='])
         for k in k_levels:
             print(f'K Level: {k}')
             write_file(f'Results/{file_name}.txt', [f'==> K Level: {k}'])
@@ -70,16 +70,16 @@ def run_trials(dataset, dataset_names, k, kapur, algorithm, file_name):
             best = max(results, key=lambda x: x.fitness)
             thr_string = ','.join([str(thr) for thr in best.thresholds])
             print(f'Best: [{thr_string}], Fitness: {round(best.fitness, 4)}')
-            results_text.append(f'==> Best: [{thr_string}], Best Fitness: {round(best.fitness, 4)}')
+            results_text.append(f'> Best: [{thr_string}], Best Fitness: {round(best.fitness, 4)}')
             fitness = [best.fitness for best in results]
             mean_fitness = np.mean(fitness)
             std_fitness = np.std(fitness)
             print(f'Mean Fitness: {round(mean_fitness, 4)}, Std Fitness: {round(std_fitness, 4)}')
-            results_text.append(f'==> Mean Fitness: {round(mean_fitness, 4)}, Std Fitness: {round(std_fitness, 4)}')
+            results_text.append(f'> Mean Fitness: {round(mean_fitness, 4)}, Std Fitness: {round(std_fitness, 4)}')
             # Uniformity measure
             u = uniformity_measure(image.copy(), best.thresholds, k)
             print(f'Uniformity Measure: {round(u, 4)}')
-            results_text.append(f'==> Uniformity Measure: {round(u, 4)}')
+            results_text.append(f'> Uniformity Measure: {round(u, 4)}')
             # Save results
             print('Saving results...')
             write_file(f'Results/{file_name}.txt', results_text)
@@ -96,8 +96,8 @@ def main():
     # seed =
     np.random.seed(seed)
     print('Seed:', seed)
-    write_file('Results/RGA.txt', [f'=== Seed: {seed} ==='])
-    write_file('Results/HRGA.txt', [f'=== Seed: {seed} ==='])
+    write_file('Results/RGA.txt', [f'=== SEED: {seed} ==='])
+    write_file('Results/HRGA.txt', [f'=== SEED: {seed} ==='])
     # Load images
     dataset = []
     dataset_names = []
