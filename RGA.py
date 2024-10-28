@@ -28,8 +28,7 @@ class GeneticAlgorithm:
         bestIndividual = None
         for _ in range(int(Constants.GENERATIONS.value)):
             self.propagate()
-            bestIndividual = self.getBest(self._generation, int(Constants.POPULATION_SIZE.value))
-            print("best fitness: ", bestIndividual.fitness)
+            bestIndividual = self.getBest(self._generation)
 
         return bestIndividual
 

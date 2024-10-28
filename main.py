@@ -22,7 +22,6 @@ def write_image(path, image_name, image):
 def uniformity_measure(image, thresholds, n_thresholds):
     pixels = image.shape[0] * image.shape[1]
     # Histogram
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     image = image.flatten()
     hist = np.histogram(image, bins=256, range=(0, 256))[0] / pixels # Normalized histogram
     # Max grey level of pixels in the image
@@ -61,23 +60,25 @@ def run_trials(dataset, dataset_names, k, kapur, algorithm, file_name):
             results = []
             results_text = []
             for i in range(10): # 100 trials
-                kapur = Kapur(image)
-                algo = algorithm(image, k, kapur)
+                kapur = Kapur(image.copy())
+                algo = algorithm(image.copy(), k, kapur)
                 best = algo.start()
-                print(f'Trial: {i+1}, Thresholds: {best.thresholds}, Fitness: {round(best.fitness, 4)}')
-                results_text.append(f'Trial: {i+1}, Thresholds: {best.thresholds}, Fitness: {round(best.fitness, 4)}')
+                thr_string = ','.join([str(thr) for thr in best.thresholds])[:-1]
+                print(f'Trial: {i+1}, Thresholds: [{thr_string}], Fitness: {round(best.fitness, 4)}')
+                results_text.append(f'Trial: {i+1}, Thresholds: [{thr_string}], Fitness: {round(best.fitness, 4)}')
                 results.append(best)
             # Metrics
             best = max(results, key=lambda x: x.fitness)
-            print(f'Best: {best.thresholds}, Fitness: {round(best.fitness, 4)}')
-            results_text.append(f'==> Best: {best.thresholds}, Best Fitness: {round(best.fitness, 4)}')
+            thr_string = ','.join([str(thr) for thr in best.thresholds])[:-1]
+            print(f'Best: [{thr_string}], Fitness: {round(best.fitness, 4)}')
+            results_text.append(f'==> Best: [{thr_string}], Best Fitness: {round(best.fitness, 4)}')
             fitness = [best.fitness for best in results]
             mean_fitness = np.mean(fitness)
             std_fitness = np.std(fitness)
             print(f'Mean Fitness: {round(mean_fitness, 4)}, Std Fitness: {round(std_fitness, 4)}')
             results_text.append(f'==> Mean Fitness: {round(mean_fitness, 4)}, Std Fitness: {round(std_fitness, 4)}')
             # Uniformity measure
-            u = uniformity_measure(image, best.thresholds, k)
+            u = uniformity_measure(image.copy(), best.thresholds, k)
             print(f'Uniformity Measure: {round(u, 4)}')
             results_text.append(f'==> Uniformity Measure: {round(u, 4)}')
             # Save results
@@ -85,7 +86,7 @@ def run_trials(dataset, dataset_names, k, kapur, algorithm, file_name):
             write_file(f'Results/{file_name}.txt', results_text)
             # Save best image
             print('Saving best image...')
-            colour_image = kapur.buildColorImage(image, best.thresholds)
+            colour_image = kapur.buildColorImage(image.copy(), best.thresholds)
             write_image(f'Results/{file_name}/{k}', f'{dataset_names[i]}_K{k}_Best', colour_image)
     print(f'{file_name} Done!')
 
@@ -102,15 +103,15 @@ def main():
     dataset = []
     dataset_names = []
     for image_path in glob('Dataset/*.png'):
-        image = cv2.imread(image_path)
+        image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
         dataset_names.append(image_path.split('\\')[-1].split('.')[0])
         dataset.append(image)
 
     # Run trials
     # RGA
-    run_trials(dataset, dataset_names, 2, Kapur, RGA, 'RGA')
+    run_trials(dataset.copy(), dataset_names, 2, Kapur, RGA, 'RGA')
     # HRGA
-    run_trials(dataset, dataset_names, 2, Kapur, HRGA, 'HRGA')
+    run_trials(dataset.copy(), dataset_names, 2, Kapur, HRGA, 'HRGA')
 
     print('Done!')
     

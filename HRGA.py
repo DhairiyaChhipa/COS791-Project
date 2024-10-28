@@ -38,8 +38,6 @@ class GeneticAlgorithmNeighbourSearch:
             self.propagate()
 
             bestGlobal = self.getBestIndividual()
-            print("Best fitness overall:", round(bestGlobal.fitness, 4))
-            print("Generation:", _ + 1)
             # bestLocal = self.getBest(self._generation)
             # print("Best fitness this generation:", round(bestLocal.fitness, 4), "\n")
 
