@@ -63,13 +63,13 @@ def run_trials(dataset, dataset_names, k, kapur, algorithm, file_name):
                 kapur = Kapur(image.copy())
                 algo = algorithm(image.copy(), k, kapur)
                 best = algo.start()
-                thr_string = ','.join([str(thr) for thr in best.thresholds])[:-1]
+                thr_string = ','.join([str(thr) for thr in best.thresholds])
                 print(f'Trial: {i+1}, Thresholds: [{thr_string}], Fitness: {round(best.fitness, 4)}')
                 results_text.append(f'Trial: {i+1}, Thresholds: [{thr_string}], Fitness: {round(best.fitness, 4)}')
                 results.append(best)
             # Metrics
             best = max(results, key=lambda x: x.fitness)
-            thr_string = ','.join([str(thr) for thr in best.thresholds])[:-1]
+            thr_string = ','.join([str(thr) for thr in best.thresholds])
             print(f'Best: [{thr_string}], Fitness: {round(best.fitness, 4)}')
             results_text.append(f'==> Best: [{thr_string}], Best Fitness: {round(best.fitness, 4)}')
             fitness = [best.fitness for best in results]
