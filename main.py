@@ -87,7 +87,7 @@ def run_trials(dataset, dataset_names, k, kapur, algorithm, file_name):
             # Save best image
             print('Saving best image...')
             colour_image = kapur.buildColorImage(image.copy(), best.thresholds)
-            write_image(f'Results/{file_name}/{k}', f'{dataset_names[i]}_K{k}_Best', colour_image)
+            write_image(f'Results/{file_name}/{k}/', f'{dataset_names[i]}_K{k}_Best', colour_image)
     print(f'{file_name} Done!')
 
 def main():

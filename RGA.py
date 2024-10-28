@@ -29,7 +29,6 @@ class GeneticAlgorithm:
         for _ in range(int(Constants.GENERATIONS.value)):
             self.propagate()
             bestIndividual = self.getBest(self._generation)
-            print('Best threshold: ', bestIndividual.thresholds, 'Fitness: ', bestIndividual.fitness)
         return bestIndividual
 
     def propagate(self):  # handles selection and repopulation
