@@ -7,18 +7,9 @@ from Chromosome import Chromosome
 from Kapur import Kapur
 
 class Constants(Enum):
-    # CROSSOVER_RATE = 0.6
-    # MUTATION_RATE = 0.4
-    # GENERATIONS = 100
-    # POPULATION_SIZE = 16
-    # ELITIST_SIZE = 4
-    # TOURNAMENT_SIZE = 5
-    # SELECTION_SIZE = (POPULATION_SIZE / 2) + 1
-    # LOCAL_ITERATIONS = 20
-    # LOCAL_SEARCH_RATE = 0.3
     CROSSOVER_RATE = 0.6
     MUTATION_RATE = 0.4
-    GENERATIONS = 100
+    GENERATIONS = 80
     POPULATION_SIZE = 20
     ELITIST_SIZE = 4
     TOURNAMENT_SIZE = 5
