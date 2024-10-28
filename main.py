@@ -58,14 +58,17 @@ def run_trials(dataset, dataset_names, k, kapur, algorithm, file_name):
             write_file(f'Results/{file_name}.txt', [f'==> K Level: {k}'])
             results = []
             results_text = []
-            for j in range(10): # 100 trials
+            print("Trial: ", end=' ')
+            for j in range(100): # 100 trials
                 kapur = Kapur(image.copy())
                 algo = algorithm(image.copy(), k, kapur)
                 best = algo.start()
-                thr_string = ','.join([str(thr) for thr in best.thresholds])
-                print(f'Trial: {j+1}, Thresholds: [{thr_string}], Fitness: {round(best.fitness, 4)}')
-                results_text.append(f'Trial: {j+1}, Thresholds: [{thr_string}], Fitness: {round(best.fitness, 4)}')
+                # thr_string = ','.join([str(thr) for thr in best.thresholds])
+                print(f'{j+1}', end=',')
+                # print(f'Trial: {j+1}, Thresholds: [{thr_string}], Fitness: {round(best.fitness, 4)}')
+                # results_text.append(f'Trial: {j+1}, Thresholds: [{thr_string}], Fitness: {round(best.fitness, 4)}')
                 results.append(best)
+            print()
             # Metrics
             best = max(results, key=lambda x: x.fitness)
             thr_string = ','.join([str(thr) for thr in best.thresholds])
