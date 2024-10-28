@@ -1,0 +1,412 @@
+=== Seed: 631 ===
+==> Image: 022 <==
+==> K Level: 2
+Trial: 1, Thresholds: [92,181], Fitness: 9.203
+Trial: 2, Thresholds: [101,183], Fitness: 9.2073
+Trial: 3, Thresholds: [87,184], Fitness: 9.2024
+Trial: 4, Thresholds: [93,183], Fitness: 9.215
+Trial: 5, Thresholds: [84,182], Fitness: 9.1982
+Trial: 6, Thresholds: [97,183], Fitness: 9.2136
+Trial: 7, Thresholds: [92,182], Fitness: 9.215
+Trial: 8, Thresholds: [90,183], Fitness: 9.2118
+Trial: 9, Thresholds: [97,185], Fitness: 9.2126
+Trial: 10, Thresholds: [86,185], Fitness: 9.2024
+==> Best: [93,183], Best Fitness: 9.215
+==> Mean Fitness: 9.2081, Std Fitness: 0.0059
+==> Uniformity Measure: -2773.9009
+==> K Level: 3
+Trial: 1, Thresholds: [57,120,187], Fitness: 11.7007
+Trial: 2, Thresholds: [56,123,182], Fitness: 11.714
+Trial: 3, Thresholds: [48,108,183], Fitness: 11.7121
+Trial: 4, Thresholds: [59,111,185], Fitness: 11.7227
+Trial: 5, Thresholds: [54,115,185], Fitness: 11.7318
+Trial: 6, Thresholds: [62,119,184], Fitness: 11.7307
+Trial: 7, Thresholds: [60,118,182], Fitness: 11.7273
+Trial: 8, Thresholds: [55,111,182], Fitness: 11.7271
+Trial: 9, Thresholds: [56,116,184], Fitness: 11.7312
+Trial: 10, Thresholds: [57,115,185], Fitness: 11.7333
+==> Best: [57,115,185], Best Fitness: 11.7333
+==> Mean Fitness: 11.7231, Std Fitness: 0.0102
+==> Uniformity Measure: -1577.4606
+==> K Level: 4
+=== Seed: 0 ===
+==> Image: 022 <==
+==> K Level: 2
+Trial: 1, Thresholds: [95,183], Fitness: 9.2155
+Trial: 2, Thresholds: [96,185], Fitness: 9.2126
+Trial: 3, Thresholds: [98,182], Fitness: 9.2112
+Trial: 4, Thresholds: [87,183], Fitness: 9.2045
+Trial: 5, Thresholds: [93,185], Fitness: 9.2135
+Trial: 6, Thresholds: [97,184], Fitness: 9.2126
+Trial: 7, Thresholds: [96,185], Fitness: 9.2126
+Trial: 8, Thresholds: [91,182], Fitness: 9.2118
+Trial: 9, Thresholds: [88,182], Fitness: 9.2083
+Trial: 10, Thresholds: [93,182], Fitness: 9.215
+==> Best: [95,183], Best Fitness: 9.2155
+==> Mean Fitness: 9.2117, Std Fitness: 0.0031
+==> Uniformity Measure: -2876.3515
+==> K Level: 3
+=== Seed: 561 ===
+==> Image: 022 <==
+==> K Level: 2
+=== Seed: 712 ===
+==> Image: 022 <==
+==> K Level: 2
+Trial: 1, Thresholds: [94,182], Fitness: 9.2155
+Trial: 2, Thresholds: [97,182], Fitness: 9.2136
+Trial: 3, Thresholds: [92,185], Fitness: 9.2135
+Trial: 4, Thresholds: [87,185], Fitness: 9.2024
+Trial: 5, Thresholds: [90,185], Fitness: 9.2101
+Trial: 6, Thresholds: [95,182], Fitness: 9.2155
+Trial: 7, Thresholds: [95,184], Fitness: 9.2142
+Trial: 8, Thresholds: [88,185], Fitness: 9.2064
+Trial: 9, Thresholds: [99,183], Fitness: 9.2112
+Trial: 10, Thresholds: [99,184], Fitness: 9.2104
+==> Best: [94,182], Best Fitness: 9.2155
+==> Mean Fitness: 9.2113, Std Fitness: 0.004
+==> Uniformity Measure: 0.9558
+==> K Level: 3
+Trial: 1, Thresholds: [56,110,185], Fitness: 11.727
+Trial: 2, Thresholds: [53,115,184], Fitness: 11.7292
+Trial: 3, Thresholds: [57,112,184], Fitness: 11.7318
+Trial: 4, Thresholds: [54,114,183], Fitness: 11.7302
+Trial: 5, Thresholds: [56,117,185], Fitness: 11.7312
+Trial: 6, Thresholds: [58,115,185], Fitness: 11.7316
+Trial: 7, Thresholds: [54,114,185], Fitness: 11.7318
+Trial: 8, Thresholds: [55,114,186], Fitness: 11.7075
+Trial: 9, Thresholds: [60,112,182], Fitness: 11.7241
+Trial: 10, Thresholds: [55,115,184], Fitness: 11.7318
+==> Best: [57,112,184], Best Fitness: 11.7318
+==> Mean Fitness: 11.7276, Std Fitness: 0.0071
+==> Uniformity Measure: 0.9758
+==> K Level: 4
+Trial: 1, Thresholds: [36,83,124,184], Fitness: 13.9322
+Trial: 2, Thresholds: [52,111,168,207], Fitness: 13.9285
+Trial: 3, Thresholds: [48,91,132,185], Fitness: 13.9407
+Trial: 4, Thresholds: [50,86,134,185], Fitness: 13.912
+Trial: 5, Thresholds: [49,94,143,182], Fitness: 13.8999
+Trial: 6, Thresholds: [41,86,129,185], Fitness: 13.9503
+Trial: 7, Thresholds: [54,111,167,196], Fitness: 13.8827
+Trial: 8, Thresholds: [49,90,130,186], Fitness: 13.9199
+Trial: 9, Thresholds: [44,87,141,188], Fitness: 13.8649
+Trial: 10, Thresholds: [51,107,166,206], Fitness: 13.922
+==> Best: [41,86,129,185], Best Fitness: 13.9503
+==> Mean Fitness: 13.9153, Std Fitness: 0.025
+==> Uniformity Measure: 0.9821
+==> K Level: 5
+Trial: 1, Thresholds: [27,62,98,141,193], Fitness: 15.8056
+Trial: 2, Thresholds: [63,119,156,181,216], Fitness: 15.732
+Trial: 3, Thresholds: [43,89,131,180,212], Fitness: 16.0608
+Trial: 4, Thresholds: [43,74,121,173,214], Fitness: 16.023
+Trial: 5, Thresholds: [36,79,130,173,208], Fitness: 16.0721
+Trial: 6, Thresholds: [45,88,133,175,213], Fitness: 16.1013
+Trial: 7, Thresholds: [44,76,123,173,209], Fitness: 16.0622
+Trial: 8, Thresholds: [54,94,130,179,216], Fitness: 15.988
+Trial: 9, Thresholds: [41,90,132,172,213], Fitness: 16.0847
+Trial: 10, Thresholds: [39,75,115,149,185], Fitness: 15.9359
+==> Best: [45,88,133,175,213], Best Fitness: 16.1013
+==> Mean Fitness: 15.9866, Std Fitness: 0.1195
+==> Uniformity Measure: 0.9769
+==> Image: 032 <==
+==> K Level: 2
+Trial: 1, Thresholds: [113,184], Fitness: 9.262
+Trial: 2, Thresholds: [104,185], Fitness: 9.2579
+Trial: 3, Thresholds: [111,189], Fitness: 9.2552
+Trial: 4, Thresholds: [108,187], Fitness: 9.2577
+Trial: 5, Thresholds: [110,189], Fitness: 9.2552
+Trial: 6, Thresholds: [113,184], Fitness: 9.262
+Trial: 7, Thresholds: [113,184], Fitness: 9.262
+Trial: 8, Thresholds: [111,187], Fitness: 9.2573
+Trial: 9, Thresholds: [108,184], Fitness: 9.2645
+Trial: 10, Thresholds: [109,189], Fitness: 9.2553
+==> Best: [108,184], Best Fitness: 9.2645
+==> Mean Fitness: 9.2589, Std Fitness: 0.0032
+==> Uniformity Measure: 0.9326
+==> K Level: 3
+Trial: 1, Thresholds: [46,110,185], Fitness: 11.6631
+Trial: 2, Thresholds: [56,121,188], Fitness: 11.672
+Trial: 3, Thresholds: [59,116,185], Fitness: 11.6795
+Trial: 4, Thresholds: [64,125,188], Fitness: 11.6581
+Trial: 5, Thresholds: [51,117,184], Fitness: 11.6801
+Trial: 6, Thresholds: [57,114,183], Fitness: 11.6646
+Trial: 7, Thresholds: [58,113,189], Fitness: 11.6628
+Trial: 8, Thresholds: [54,114,189], Fitness: 11.6761
+Trial: 9, Thresholds: [55,113,187], Fitness: 11.672
+Trial: 10, Thresholds: [64,120,187], Fitness: 11.6615
+==> Best: [51,117,184], Best Fitness: 11.6801
+==> Mean Fitness: 11.669, Std Fitness: 0.0075
+==> Uniformity Measure: 0.9783
+==> K Level: 4
+Trial: 1, Thresholds: [35,80,126,186], Fitness: 13.9326
+Trial: 2, Thresholds: [53,100,147,190], Fitness: 13.859
+Trial: 3, Thresholds: [53,111,168,202], Fitness: 13.8065
+Trial: 4, Thresholds: [49,110,173,208], Fitness: 13.8038
+Trial: 5, Thresholds: [45,96,140,189], Fitness: 13.9107
+Trial: 6, Thresholds: [36,84,127,185], Fitness: 13.9288
+Trial: 7, Thresholds: [53,116,174,211], Fitness: 13.7945
+Trial: 8, Thresholds: [57,112,171,203], Fitness: 13.8097
+Trial: 9, Thresholds: [38,86,130,189], Fitness: 13.9353
+Trial: 10, Thresholds: [50,94,134,184], Fitness: 13.8893
+==> Best: [38,86,130,189], Best Fitness: 13.9353
+==> Mean Fitness: 13.867, Std Fitness: 0.0561
+==> Uniformity Measure: 0.9825
+==> K Level: 5
+Trial: 1, Thresholds: [35,81,130,172,217], Fitness: 15.9567
+Trial: 2, Thresholds: [39,89,133,174,206], Fitness: 16.0194
+Trial: 3, Thresholds: [35,77,115,161,191], Fitness: 15.9744
+Trial: 4, Thresholds: [37,77,120,171,204], Fitness: 16.0324
+Trial: 5, Thresholds: [35,74,126,176,208], Fitness: 16.0069
+Trial: 6, Thresholds: [33,67,117,171,208], Fitness: 15.9706
+Trial: 7, Thresholds: [31,85,125,173,210], Fitness: 15.9884
+Trial: 8, Thresholds: [36,81,116,173,206], Fitness: 16.0198
+Trial: 9, Thresholds: [29,60,104,140,184], Fitness: 15.9558
+Trial: 10, Thresholds: [36,75,118,167,197], Fitness: 15.995
+==> Best: [37,77,120,171,204], Best Fitness: 16.0324
+==> Mean Fitness: 15.9919, Std Fitness: 0.0259
+==> Uniformity Measure: 0.9827
+==> Image: 042 <==
+==> K Level: 2
+Trial: 1, Thresholds: [108,191], Fitness: 9.2121
+Trial: 2, Thresholds: [109,182], Fitness: 9.2514
+Trial: 3, Thresholds: [105,189], Fitness: 9.2123
+Trial: 4, Thresholds: [113,186], Fitness: 9.2517
+Trial: 5, Thresholds: [108,187], Fitness: 9.2418
+Trial: 6, Thresholds: [115,184], Fitness: 9.2493
+Trial: 7, Thresholds: [115,187], Fitness: 9.2471
+Trial: 8, Thresholds: [106,185], Fitness: 9.2405
+Trial: 9, Thresholds: [114,182], Fitness: 9.2525
+Trial: 10, Thresholds: [112,185], Fitness: 9.2546
+==> Best: [112,185], Best Fitness: 9.2546
+==> Mean Fitness: 9.2413, Std Fitness: 0.0152
+==> Uniformity Measure: 0.9202
+==> K Level: 3
+Trial: 1, Thresholds: [71,125,187], Fitness: 11.5669
+Trial: 2, Thresholds: [83,128,188], Fitness: 11.5708
+Trial: 3, Thresholds: [89,136,187], Fitness: 11.5718
+Trial: 4, Thresholds: [80,134,186], Fitness: 11.5706
+Trial: 5, Thresholds: [76,126,183], Fitness: 11.5698
+Trial: 6, Thresholds: [90,137,189], Fitness: 11.5717
+Trial: 7, Thresholds: [49,116,185], Fitness: 11.5422
+Trial: 8, Thresholds: [75,124,185], Fitness: 11.5684
+Trial: 9, Thresholds: [101,140,188], Fitness: 11.553
+Trial: 10, Thresholds: [75,126,191], Fitness: 11.5532
+==> Best: [89,136,187], Best Fitness: 11.5718
+==> Mean Fitness: 11.5638, Std Fitness: 0.0099
+==> Uniformity Measure: 0.9401
+==> K Level: 4
+Trial: 1, Thresholds: [48,106,154,198], Fitness: 13.7731
+Trial: 2, Thresholds: [34,87,139,190], Fitness: 13.8415
+Trial: 3, Thresholds: [31,74,127,182], Fitness: 13.8574
+Trial: 4, Thresholds: [26,74,123,185], Fitness: 13.8528
+Trial: 5, Thresholds: [33,84,143,188], Fitness: 13.8302
+Trial: 6, Thresholds: [35,81,128,190], Fitness: 13.8436
+Trial: 7, Thresholds: [25,78,141,189], Fitness: 13.8146
+Trial: 8, Thresholds: [51,97,149,189], Fitness: 13.7847
+Trial: 9, Thresholds: [44,100,144,191], Fitness: 13.8142
+Trial: 10, Thresholds: [32,75,132,191], Fitness: 13.8371
+==> Best: [31,74,127,182], Best Fitness: 13.8574
+==> Mean Fitness: 13.8249, Std Fitness: 0.0267
+==> Uniformity Measure: 0.9801
+==> K Level: 5
+Trial: 1, Thresholds: [53,105,149,181,219], Fitness: 15.8494
+Trial: 2, Thresholds: [23,71,105,148,187], Fitness: 15.9741
+Trial: 3, Thresholds: [22,71,125,173,218], Fitness: 15.9589
+Trial: 4, Thresholds: [27,66,124,173,215], Fitness: 15.9672
+Trial: 5, Thresholds: [18,60,110,151,199], Fitness: 15.9616
+Trial: 6, Thresholds: [30,66,121,168,206], Fitness: 15.9703
+Trial: 7, Thresholds: [29,66,110,154,196], Fitness: 16.0126
+Trial: 8, Thresholds: [25,68,116,167,209], Fitness: 16.0114
+Trial: 9, Thresholds: [33,83,126,179,214], Fitness: 15.9773
+Trial: 10, Thresholds: [26,71,114,157,194], Fitness: 16.022
+==> Best: [26,71,114,157,194], Best Fitness: 16.022
+==> Mean Fitness: 15.9705, Std Fitness: 0.0459
+==> Uniformity Measure: 0.984
+==> Image: 052 <==
+==> K Level: 2
+Trial: 1, Thresholds: [105,184], Fitness: 9.2579
+Trial: 2, Thresholds: [107,185], Fitness: 9.2617
+Trial: 3, Thresholds: [108,185], Fitness: 9.2645
+Trial: 4, Thresholds: [111,185], Fitness: 9.2637
+Trial: 5, Thresholds: [103,189], Fitness: 9.2403
+Trial: 6, Thresholds: [109,183], Fitness: 9.2491
+Trial: 7, Thresholds: [110,189], Fitness: 9.2552
+Trial: 8, Thresholds: [106,185], Fitness: 9.2617
+Trial: 9, Thresholds: [112,186], Fitness: 9.256
+Trial: 10, Thresholds: [106,183], Fitness: 9.2468
+==> Best: [108,185], Best Fitness: 9.2645
+==> Mean Fitness: 9.2557, Std Fitness: 0.0076
+==> Uniformity Measure: 0.9326
+==> K Level: 3
+Trial: 1, Thresholds: [54,116,185], Fitness: 11.6827
+Trial: 2, Thresholds: [53,116,185], Fitness: 11.6824
+Trial: 3, Thresholds: [59,119,188], Fitness: 11.6741
+Trial: 4, Thresholds: [57,111,189], Fitness: 11.6566
+Trial: 5, Thresholds: [58,114,184], Fitness: 11.6777
+Trial: 6, Thresholds: [61,113,188], Fitness: 11.6564
+Trial: 7, Thresholds: [53,115,186], Fitness: 11.6779
+Trial: 8, Thresholds: [61,119,188], Fitness: 11.671
+Trial: 9, Thresholds: [54,113,184], Fitness: 11.678
+Trial: 10, Thresholds: [57,118,189], Fitness: 11.6759
+==> Best: [54,116,185], Best Fitness: 11.6827
+==> Mean Fitness: 11.6733, Std Fitness: 0.009
+==> Uniformity Measure: 0.9774
+==> K Level: 4
+Trial: 1, Thresholds: [30,79,136,189], Fitness: 13.9003
+Trial: 2, Thresholds: [50,114,175,207], Fitness: 13.812
+Trial: 3, Thresholds: [38,78,130,190], Fitness: 13.9122
+Trial: 4, Thresholds: [44,92,136,191], Fitness: 13.9037
+Trial: 5, Thresholds: [59,107,175,208], Fitness: 13.7635
+Trial: 6, Thresholds: [39,83,137,189], Fitness: 13.9245
+Trial: 7, Thresholds: [32,82,135,189], Fitness: 13.9247
+Trial: 8, Thresholds: [33,82,128,185], Fitness: 13.9323
+Trial: 9, Thresholds: [40,79,132,186], Fitness: 13.9115
+Trial: 10, Thresholds: [36,86,131,189], Fitness: 13.9319
+==> Best: [33,82,128,185], Best Fitness: 13.9323
+==> Mean Fitness: 13.8917, Std Fitness: 0.0541
+==> Uniformity Measure: 0.9838
+==> K Level: 5
+Trial: 1, Thresholds: [38,77,109,158,189], Fitness: 15.9298
+Trial: 2, Thresholds: [35,82,122,168,194], Fitness: 15.9921
+Trial: 3, Thresholds: [28,63,102,143,186], Fitness: 15.9761
+Trial: 4, Thresholds: [32,81,131,175,208], Fitness: 16.0233
+Trial: 5, Thresholds: [28,72,112,152,192], Fitness: 15.9869
+Trial: 6, Thresholds: [28,76,110,146,191], Fitness: 15.969
+Trial: 7, Thresholds: [41,80,126,171,211], Fitness: 15.9853
+Trial: 8, Thresholds: [33,78,125,176,211], Fitness: 16.0173
+Trial: 9, Thresholds: [37,77,129,175,205], Fitness: 16.0235
+Trial: 10, Thresholds: [37,70,124,174,206], Fitness: 16.0013
+==> Best: [37,77,129,175,205], Best Fitness: 16.0235
+==> Mean Fitness: 15.9905, Std Fitness: 0.0272
+==> Uniformity Measure: 0.982
+==> Image: 062 <==
+==> K Level: 2
+Trial: 1, Thresholds: [120,184], Fitness: 9.3362
+Trial: 2, Thresholds: [119,188], Fitness: 9.3284
+Trial: 3, Thresholds: [122,188], Fitness: 9.331
+Trial: 4, Thresholds: [122,188], Fitness: 9.331
+Trial: 5, Thresholds: [120,185], Fitness: 9.3362
+Trial: 6, Thresholds: [122,182], Fitness: 9.3219
+Trial: 7, Thresholds: [120,184], Fitness: 9.3362
+Trial: 8, Thresholds: [123,186], Fitness: 9.3319
+Trial: 9, Thresholds: [120,185], Fitness: 9.3362
+Trial: 10, Thresholds: [119,185], Fitness: 9.3314
+==> Best: [120,184], Best Fitness: 9.3362
+==> Mean Fitness: 9.332, Std Fitness: 0.0043
+==> Uniformity Measure: 0.8966
+==> K Level: 3
+Trial: 1, Thresholds: [98,141,193], Fitness: 11.6577
+Trial: 2, Thresholds: [98,146,200], Fitness: 11.6442
+Trial: 3, Thresholds: [99,146,189], Fitness: 11.6429
+Trial: 4, Thresholds: [101,149,197], Fitness: 11.6664
+Trial: 5, Thresholds: [101,144,196], Fitness: 11.6641
+Trial: 6, Thresholds: [98,145,199], Fitness: 11.6577
+Trial: 7, Thresholds: [96,144,195], Fitness: 11.6691
+Trial: 8, Thresholds: [94,140,195], Fitness: 11.6613
+Trial: 9, Thresholds: [95,140,197], Fitness: 11.6491
+Trial: 10, Thresholds: [101,140,194], Fitness: 11.6593
+==> Best: [96,144,195], Best Fitness: 11.6691
+==> Mean Fitness: 11.6572, Std Fitness: 0.0086
+==> Uniformity Measure: 0.9091
+==> K Level: 4
+Trial: 1, Thresholds: [93,134,171,207], Fitness: 13.7684
+Trial: 2, Thresholds: [78,122,161,200], Fitness: 13.6939
+Trial: 3, Thresholds: [14,70,126,187], Fitness: 13.6082
+Trial: 4, Thresholds: [18,67,126,192], Fitness: 13.6365
+Trial: 5, Thresholds: [17,68,132,197], Fitness: 13.6102
+Trial: 6, Thresholds: [76,116,159,207], Fitness: 13.676
+Trial: 7, Thresholds: [85,123,166,208], Fitness: 13.7482
+Trial: 8, Thresholds: [16,70,134,182], Fitness: 13.5781
+Trial: 9, Thresholds: [23,66,120,180], Fitness: 13.6198
+Trial: 10, Thresholds: [97,131,172,210], Fitness: 13.7541
+==> Best: [93,134,171,207], Best Fitness: 13.7684
+==> Mean Fitness: 13.6693, Std Fitness: 0.0655
+==> Uniformity Measure: 0.8971
+==> K Level: 5
+Trial: 1, Thresholds: [19,63,112,155,195], Fitness: 15.8919
+Trial: 2, Thresholds: [39,67,115,168,209], Fitness: 15.7243
+Trial: 3, Thresholds: [20,67,118,167,211], Fitness: 15.8707
+Trial: 4, Thresholds: [8,60,108,155,195], Fitness: 15.8642
+Trial: 5, Thresholds: [24,68,114,165,198], Fitness: 15.8479
+Trial: 6, Thresholds: [13,56,104,147,192], Fitness: 15.8544
+Trial: 7, Thresholds: [24,66,111,165,203], Fitness: 15.8586
+Trial: 8, Thresholds: [18,65,107,152,198], Fitness: 15.8943
+Trial: 9, Thresholds: [12,63,118,175,209], Fitness: 15.8333
+Trial: 10, Thresholds: [75,105,142,179,213], Fitness: 15.6608
+==> Best: [18,65,107,152,198], Best Fitness: 15.8943
+==> Mean Fitness: 15.8301, Std Fitness: 0.0724
+==> Uniformity Measure: 0.9816
+==> Image: 072 <==
+==> K Level: 2
+Trial: 1, Thresholds: [114,174], Fitness: 9.4159
+Trial: 2, Thresholds: [113,174], Fitness: 9.4142
+Trial: 3, Thresholds: [120,178], Fitness: 9.4168
+Trial: 4, Thresholds: [113,179], Fitness: 9.4161
+Trial: 5, Thresholds: [110,179], Fitness: 9.4141
+Trial: 6, Thresholds: [118,176], Fitness: 9.4138
+Trial: 7, Thresholds: [114,177], Fitness: 9.4163
+Trial: 8, Thresholds: [119,175], Fitness: 9.4111
+Trial: 9, Thresholds: [115,179], Fitness: 9.4201
+Trial: 10, Thresholds: [114,178], Fitness: 9.4201
+==> Best: [115,179], Best Fitness: 9.4201
+==> Mean Fitness: 9.4158, Std Fitness: 0.0026
+==> Uniformity Measure: 0.8981
+==> K Level: 3
+Trial: 1, Thresholds: [102,144,191], Fitness: 11.6893
+Trial: 2, Thresholds: [103,143,186], Fitness: 11.6893
+Trial: 3, Thresholds: [105,144,191], Fitness: 11.6822
+Trial: 4, Thresholds: [96,146,190], Fitness: 11.6717
+Trial: 5, Thresholds: [105,148,190], Fitness: 11.685
+Trial: 6, Thresholds: [106,149,191], Fitness: 11.6785
+Trial: 7, Thresholds: [103,146,194], Fitness: 11.6837
+Trial: 8, Thresholds: [101,140,187], Fitness: 11.6923
+Trial: 9, Thresholds: [99,139,188], Fitness: 11.6859
+Trial: 10, Thresholds: [95,141,198], Fitness: 11.6371
+==> Best: [101,140,187], Best Fitness: 11.6923
+==> Mean Fitness: 11.6795, Std Fitness: 0.0152
+==> Uniformity Measure: 0.888
+==> K Level: 4
+=== Seed: 363 ===
+==> Image: 022 <==
+==> K Level: 2
+Trial: 1, Thresholds: [98,185], Fitness: 9.2104
+Trial: 2, Thresholds: [94,182], Fitness: 9.2155
+Trial: 3, Thresholds: [90,185], Fitness: 9.2101
+Trial: 4, Thresholds: [84,183], Fitness: 9.1982
+Trial: 5, Thresholds: [103,182], Fitness: 9.2057
+Trial: 6, Thresholds: [93,183], Fitness: 9.215
+Trial: 7, Thresholds: [100,182], Fitness: 9.2073
+Trial: 8, Thresholds: [94,184], Fitness: 9.2142
+Trial: 9, Thresholds: [94,183], Fitness: 9.2155
+Trial: 10, Thresholds: [86,185], Fitness: 9.2024
+==> Best: [94,182], Best Fitness: 9.2155
+==> Mean Fitness: 9.2094, Std Fitness: 0.0057
+==> Uniformity Measure: 1.0
+==> K Level: 3
+Trial: 1, Thresholds: [55,117,184], Fitness: 11.7286
+Trial: 2, Thresholds: [57,109,181], Fitness: 11.7046
+Trial: 3, Thresholds: [64,117,184], Fitness: 11.7251
+Trial: 4, Thresholds: [53,105,183], Fitness: 11.7077
+Trial: 5, Thresholds: [56,115,185], Fitness: 11.7333
+Trial: 6, Thresholds: [54,117,185], Fitness: 11.7286
+Trial: 7, Thresholds: [54,104,182], Fitness: 11.7038
+Trial: 8, Thresholds: [57,119,183], Fitness: 11.7263
+Trial: 9, Thresholds: [54,115,185], Fitness: 11.7318
+Trial: 10, Thresholds: [44,108,184], Fitness: 11.6942
+==> Best: [56,115,185], Best Fitness: 11.7333
+==> Mean Fitness: 11.7184, Std Fitness: 0.0135
+==> Uniformity Measure: 1.0
+==> K Level: 4
+Trial: 1, Thresholds: [59,110,172,206], Fitness: 13.9248
+Trial: 2, Thresholds: [64,119,173,205], Fitness: 13.8896
+Trial: 3, Thresholds: [44,91,126,185], Fitness: 13.9323
+Trial: 4, Thresholds: [45,97,134,184], Fitness: 13.9245
+Trial: 5, Thresholds: [34,80,124,180], Fitness: 13.9022
+Trial: 6, Thresholds: [37,91,129,183], Fitness: 13.9037
+Trial: 7, Thresholds: [43,85,130,186], Fitness: 13.9317
+Trial: 8, Thresholds: [61,118,175,206], Fitness: 13.9067
+Trial: 9, Thresholds: [46,101,169,206], Fitness: 13.8985
+Trial: 10, Thresholds: [49,106,173,206], Fitness: 13.9164
+==> Best: [44,91,126,185], Best Fitness: 13.9323
+==> Mean Fitness: 13.913, Std Fitness: 0.0142
+==> Uniformity Measure: 1.0
+==> K Level: 5

@@ -23,28 +23,27 @@ def uniformity_measure(image, thresholds, n_thresholds):
     pixels = image.shape[0] * image.shape[1]
     # Histogram
     image = image.flatten()
-    hist = np.histogram(image, bins=256, range=(0, 256))[0] / pixels # Normalized histogram
     # Max grey level of pixels in the image
-    max_grey_level = np.max(image)
+    max_grey_level = 255
     # Min grey level of pixels in the image
-    min_grey_level = np.min(image)
+    min_grey_level = 0
     # for each segmented region
     grey_sum = 0
     for i in range(n_thresholds):
         region = None
         if i == 0:
-            region = hist[hist <= thresholds[i]]
+            region = image[image <= thresholds[i]]
         elif i == n_thresholds - 1:
-            region = hist[hist > thresholds[i-1]]
+            region = image[image > thresholds[i - 1]]
         else:
-            region = hist[(hist > thresholds[i-1]) & (hist <= thresholds[i])]
+            region = image[(image > thresholds[i - 1]) & (image <= thresholds[i])]
         # mean grey level of pixels in the region
         mean = np.mean(region)
         # for each pixel in the region
         for j in range(len(region)):
             grey_sum += (region[j] - mean) ** 2
     # Uniformity measure
-    u = 1 - 2 * n_thresholds * (grey_sum / pixels * (max_grey_level - min_grey_level) ** 2)
+    u = 1 - 2 * n_thresholds * (grey_sum / (pixels * (max_grey_level - min_grey_level) ** 2))
     return u
 
 def run_trials(dataset, dataset_names, k, kapur, algorithm, file_name):
@@ -59,13 +58,13 @@ def run_trials(dataset, dataset_names, k, kapur, algorithm, file_name):
             write_file(f'Results/{file_name}.txt', [f'==> K Level: {k}'])
             results = []
             results_text = []
-            for i in range(10): # 100 trials
+            for j in range(10): # 100 trials
                 kapur = Kapur(image.copy())
                 algo = algorithm(image.copy(), k, kapur)
                 best = algo.start()
                 thr_string = ','.join([str(thr) for thr in best.thresholds])
-                print(f'Trial: {i+1}, Thresholds: [{thr_string}], Fitness: {round(best.fitness, 4)}')
-                results_text.append(f'Trial: {i+1}, Thresholds: [{thr_string}], Fitness: {round(best.fitness, 4)}')
+                print(f'Trial: {j+1}, Thresholds: [{thr_string}], Fitness: {round(best.fitness, 4)}')
+                results_text.append(f'Trial: {j+1}, Thresholds: [{thr_string}], Fitness: {round(best.fitness, 4)}')
                 results.append(best)
             # Metrics
             best = max(results, key=lambda x: x.fitness)
