@@ -67,7 +67,8 @@ class GeneticAlgorithm:
 
         for i in range(crossoverPoint, len(chromosome1.thresholds)):
             childThresholds1[i], childThresholds2[i] = chromosome2.thresholds[i], chromosome1.thresholds[i]
-
+        childThresholds1.sort()
+        childThresholds2.sort()
         return childThresholds1, childThresholds2
 
     def mutation(self, thresholds: list):
@@ -75,6 +76,7 @@ class GeneticAlgorithm:
         childThresholds = thresholds
         index = np.random.randint(0, len(thresholds))
         childThresholds[index] = np.clip(thresholds[index] + np.random.randint(-10, 10), 1, 254)
+        childThresholds.sort()
         return childThresholds
 
     def tournamentSelection(self):
