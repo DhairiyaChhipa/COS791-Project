@@ -14,7 +14,6 @@ class Constants(Enum):
     ELITIST_SIZE = 4
     TOURNAMENT_SIZE = 5
     SELECTION_SIZE = (POPULATION_SIZE / 2) + 1
-    LOCAL_ITERATIONS = 10
     LOCAL_SEARCH_RATE = 0.2
     COOLING_RATE = 0.7
     INITIAL_TEMP = 100
@@ -69,9 +68,9 @@ class GeneticAlgorithmNeighbourSearch:
 
             if (np.random.randint(0, 1)) < Constants.LOCAL_SEARCH_RATE.value:
                 if self.compareFitness(child1, tournamentGeneration[parent1]):
-                    child1 = self.ILS(child1)
+                    child1 = self.simulatedAnnealing(child1)
                 if self.compareFitness(child2, tournamentGeneration[parent2]):
-                    child2 = self.ILS(child2)
+                    child2 = self.simulatedAnnealing(child2)
 
             newGeneration.append(child1)
             newGeneration.append(child2)
@@ -95,29 +94,29 @@ class GeneticAlgorithmNeighbourSearch:
         childThresholds2.sort()
         return childThresholds1, childThresholds2
 
-    def ILS(self, chromosome: Chromosome):
-        # index = 0
-        # for y in range(1, len(population)):  # pick the best individual from the population
-        #     if self.compareFitness(population[y], population[index]):
-        #         index = y
-
-        # currSolution = Chromosome(self._kapur, thresholds=population[index].thresholds,
-        #                           fitness=population[index].fitness)
-        currSolution = Chromosome(self._kapur, thresholds=chromosome.thresholds, fitness=chromosome.fitness)
-        currSolution = self.localSearch(currSolution)
-        for _ in range(int(Constants.LOCAL_ITERATIONS.value)):
-            solution = self.perturbation(currSolution)  # perturbation
-            newSolution = self.simulatedAnnealing(solution)  # local search
-
-            if self.compareFitness(newSolution, currSolution):  # acceptance criteria
-                currSolution = newSolution
-
-        # if self.compareFitness(currSolution, population[index]):
-        #     population[index] = currSolution
-        if self.compareFitness(currSolution, chromosome):
-            chromosome = currSolution
-
-        return chromosome
+    # def ILS(self, chromosome: Chromosome):
+    #     # index = 0
+    #     # for y in range(1, len(population)):  # pick the best individual from the population
+    #     #     if self.compareFitness(population[y], population[index]):
+    #     #         index = y
+    # 
+    #     # currSolution = Chromosome(self._kapur, thresholds=population[index].thresholds,
+    #     #                           fitness=population[index].fitness)
+    #     currSolution = Chromosome(self._kapur, thresholds=chromosome.thresholds, fitness=chromosome.fitness)
+    #     currSolution = self.localSearch(currSolution)
+    #     for _ in range(int(Constants.LOCAL_ITERATIONS.value)):
+    #         solution = self.perturbation(currSolution)  # perturbation
+    #         newSolution = self.simulatedAnnealing(solution)  # local search
+    # 
+    #         if self.compareFitness(newSolution, currSolution):  # acceptance criteria
+    #             currSolution = newSolution
+    # 
+    #     # if self.compareFitness(currSolution, population[index]):
+    #     #     population[index] = currSolution
+    #     if self.compareFitness(currSolution, chromosome):
+    #         chromosome = currSolution
+    # 
+    #     return chromosome
 
     def simulatedAnnealing(self, chromosome: Chromosome):
         bestChromosome = chromosome
