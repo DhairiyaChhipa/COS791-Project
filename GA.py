@@ -5,14 +5,13 @@ from Kapur import Kapur
 
 
 class Constants(Enum):
-    CROSSOVER_RATE = 0.7
-    MUTATION_RATE = 0.3
-    GENERATIONS = 100
-    POPULATION_SIZE = 26
+    CROSSOVER_RATE = 0.6
+    MUTATION_RATE = 0.4
+    GENERATIONS = 10
+    POPULATION_SIZE = 20
     ELITIST_SIZE = 4
     TOURNAMENT_SIZE = 5
     SELECTION_SIZE = (POPULATION_SIZE / 2) + 1
-    MUTATION_STRATEGY = 0  # 0 = +- 10, 1 = random int (1, 254)
 
 
 class GeneticAlgorithm:
@@ -21,16 +20,6 @@ class GeneticAlgorithm:
         self._image = image
         self._threshold_count = threshold_count
         self._kapur = kapur
-
-    # def __del__(self):
-    #     # print("Constants.POPULATION_SIZE.value", Constants.POPULATION_SIZE.value)
-    #     # print("len:", len(self._generation))
-
-    #     for i in range(int(Constants.POPULATION_SIZE.value)):
-    #         del self._generation[i]
-    
-    #     if len(self._generation) == 0:
-    #         del self._generation
 
     def start(self):
         for _ in range(int(Constants.POPULATION_SIZE.value)):  # initialise generation
@@ -86,30 +75,24 @@ class GeneticAlgorithm:
         # Random mutation
         childThresholds = thresholds
         index = np.random.randint(0, len(thresholds))
-
-        if Constants.MUTATION_STRATEGY.value == 0:
-            childThresholds[index] = np.clip(
-                thresholds[index] + np.random.randint(-10, 10), 1, 254)
-        elif Constants.MUTATION_STRATEGY.value == 1:
-            childThresholds[index] = np.random.randint(1, 254)
-
+        childThresholds[index] = np.clip(thresholds[index] + np.random.randint(-10, 10), 1, 254)
         return childThresholds
-    
+
     def tournamentSelection(self):
         bestIndividuals = []
         selectionCounter = 0
 
-        while (selectionCounter < int(Constants.SELECTION_SIZE.value)):
+        while selectionCounter < int(Constants.SELECTION_SIZE.value):
             tournament = []
             tournamentCounter = 0
 
-            while (tournamentCounter < int(Constants.TOURNAMENT_SIZE.value)):
+            while tournamentCounter < int(Constants.TOURNAMENT_SIZE.value):
                 randomIndividual = self._generation[np.random.randint(0, len(self._generation))]
                 if randomIndividual not in tournament:
                     tournamentCounter += 1
                     tournament.append(randomIndividual)
-            
-            bestIndividual = self.getBest(tournament, len(tournament))
+
+            bestIndividual = self.getBest(tournament)
 
             if bestIndividual not in bestIndividuals:
                 selectionCounter += 1
@@ -124,22 +107,21 @@ class GeneticAlgorithm:
     def compareFitness(self, x: Chromosome, y: Chromosome):
         return x.fitness > y.fitness
 
-    def reorderList(self, list, size):
-        for i in range(size):
-            swapped = False
+    # def reorderList(self, currentList, size):
+    #     for i in range(size):
+    #         swapped = False
+    #         for j in range(size - i - 1):
+    #             if self.compareFitness(currentList[j + 1], currentList[j]):
+    #                 currentList[j], currentList[j + 1] = currentList[j + 1], currentList[j]
+    #                 swapped = True
+    # 
+    #         if not swapped:
+    #             break
+    #     return currentList
 
-            for j in range(size - i - 1):
-                if self.compareFitness(list[j + 1], list[j]):
-                    list[j], list[j + 1] = list[j + 1], list[j]
-                    swapped = True
-
-            if not swapped:
-                break
-
-    def getBest(self, list, size):
-        best = list[0]
-        for i in range(1, size):
-            if self.compareFitness(list[i], best):
-                best = list[i]
-
+    def getBest(self, selection: list):
+        best = selection[0]
+        for i in range(1, len(selection)):
+            if self.compareFitness(selection[i], best):
+                best = selection[i]
         return best
