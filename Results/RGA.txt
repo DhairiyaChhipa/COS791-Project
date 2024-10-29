@@ -1,0 +1,171 @@
+=== SEED: 3 ===
+===> Image: 022 <===
+==> K Level: 2
+> Best: [95,182], Best Fitness: 9.2155
+> Mean Fitness: 9.2113, Std Fitness: 0.0041
+> Uniformity Measure: 0.9558
+==> K Level: 3
+> Best: [57,114,184], Best Fitness: 11.7333
+> Mean Fitness: 11.7068, Std Fitness: 0.0654
+> Uniformity Measure: 0.9757
+==> K Level: 4
+> Best: [40,84,131,185], Best Fitness: 13.9518
+> Mean Fitness: 13.9135, Std Fitness: 0.0255
+> Uniformity Measure: 0.9821
+==> K Level: 5
+> Best: [44,86,127,175,213], Best Fitness: 16.1104
+> Mean Fitness: 16.016, Std Fitness: 0.0847
+> Uniformity Measure: 0.9773
+===> Image: 032 <===
+==> K Level: 2
+> Best: [108,184], Best Fitness: 9.2645
+> Mean Fitness: 9.2544, Std Fitness: 0.011
+> Uniformity Measure: 0.9326
+==> K Level: 3
+> Best: [52,114,185], Best Fitness: 11.6835
+> Mean Fitness: 11.6663, Std Fitness: 0.0319
+> Uniformity Measure: 0.9779
+==> K Level: 4
+> Best: [37,82,130,184], Best Fitness: 13.9393
+> Mean Fitness: 13.8931, Std Fitness: 0.0493
+> Uniformity Measure: 0.9831
+==> K Level: 5
+> Best: [40,82,126,173,206], Best Fitness: 16.0398
+> Mean Fitness: 15.9698, Std Fitness: 0.0563
+> Uniformity Measure: 0.9809
+===> Image: 042 <===
+==> K Level: 2
+> Best: [112,183], Best Fitness: 9.2585
+> Mean Fitness: 9.2473, Std Fitness: 0.0098
+> Uniformity Measure: 0.9202
+==> K Level: 3
+> Best: [83,130,187], Best Fitness: 11.5779
+> Mean Fitness: 11.5666, Std Fitness: 0.0088
+> Uniformity Measure: 0.9504
+==> K Level: 4
+> Best: [29,75,129,189], Best Fitness: 13.8617
+> Mean Fitness: 13.8153, Std Fitness: 0.0462
+> Uniformity Measure: 0.9804
+==> K Level: 5
+> Best: [28,69,109,151,190], Best Fitness: 16.0255
+> Mean Fitness: 15.9641, Std Fitness: 0.0519
+> Uniformity Measure: 0.9836
+===> Image: 052 <===
+==> K Level: 2
+> Best: [108,184], Best Fitness: 9.2645
+> Mean Fitness: 9.256, Std Fitness: 0.009
+> Uniformity Measure: 0.9326
+==> K Level: 3
+> Best: [52,114,185], Best Fitness: 11.6835
+> Mean Fitness: 11.6667, Std Fitness: 0.0163
+> Uniformity Measure: 0.9779
+==> K Level: 4
+> Best: [37,80,128,189], Best Fitness: 13.9401
+> Mean Fitness: 13.8829, Std Fitness: 0.0531
+> Uniformity Measure: 0.9832
+==> K Level: 5
+> Best: [37,80,122,172,206], Best Fitness: 16.047
+> Mean Fitness: 15.976, Std Fitness: 0.0448
+> Uniformity Measure: 0.9825
+===> Image: 062 <===
+==> K Level: 2
+> Best: [120,186], Best Fitness: 9.3367
+> Mean Fitness: 9.3297, Std Fitness: 0.0049
+> Uniformity Measure: 0.8966
+==> K Level: 3
+> Best: [101,146,195], Best Fitness: 11.6745
+> Mean Fitness: 11.6542, Std Fitness: 0.0156
+> Uniformity Measure: 0.8995
+==> K Level: 4
+> Best: [94,135,175,209], Best Fitness: 13.7797
+> Mean Fitness: 13.6637, Std Fitness: 0.064
+> Uniformity Measure: 0.891
+==> K Level: 5
+> Best: [23,64,111,157,194], Best Fitness: 15.8911
+> Mean Fitness: 15.8086, Std Fitness: 0.0818
+> Uniformity Measure: 0.9817
+===> Image: 072 <===
+==> K Level: 2
+> Best: [117,178], Best Fitness: 9.4205
+> Mean Fitness: 9.4146, Std Fitness: 0.0064
+> Uniformity Measure: 0.8959
+==> K Level: 3
+> Best: [101,141,186], Best Fitness: 11.6923
+> Mean Fitness: 11.6776, Std Fitness: 0.0108
+> Uniformity Measure: 0.888
+==> K Level: 4
+> Best: [95,133,173,213], Best Fitness: 13.8459
+> Mean Fitness: 13.7188, Std Fitness: 0.1037
+> Uniformity Measure: 0.8787
+==> K Level: 5
+> Best: [14,63,120,168,208], Best Fitness: 15.8441
+> Mean Fitness: 15.7648, Std Fitness: 0.0807
+> Uniformity Measure: 0.9795
+===> Image: 082 <===
+==> K Level: 2
+> Best: [111,168], Best Fitness: 9.191
+> Mean Fitness: 9.1794, Std Fitness: 0.0109
+> Uniformity Measure: 0.9009
+==> K Level: 3
+> Best: [103,147,189], Best Fitness: 11.4266
+> Mean Fitness: 11.4026, Std Fitness: 0.0197
+> Uniformity Measure: 0.8803
+==> K Level: 4
+> Best: [94,131,169,209], Best Fitness: 13.5188
+> Mean Fitness: 13.433, Std Fitness: 0.0515
+> Uniformity Measure: 0.8751
+==> K Level: 5
+> Best: [7,60,111,156,195], Best Fitness: 15.6353
+> Mean Fitness: 15.5542, Std Fitness: 0.0923
+> Uniformity Measure: 0.981
+===> Image: 092 <===
+==> K Level: 2
+> Best: [108,173], Best Fitness: 8.7906
+> Mean Fitness: 8.7806, Std Fitness: 0.0095
+> Uniformity Measure: 0.9104
+==> K Level: 3
+> Best: [104,157,204], Best Fitness: 11.164
+> Mean Fitness: 11.1332, Std Fitness: 0.0704
+> Uniformity Measure: 0.8782
+==> K Level: 4
+> Best: [95,133,168,211], Best Fitness: 13.2836
+> Mean Fitness: 13.1588, Std Fitness: 0.0805
+> Uniformity Measure: 0.8709
+==> K Level: 5
+> Best: [5,60,106,161,204], Best Fitness: 15.4573
+> Mean Fitness: 15.324, Std Fitness: 0.1581
+> Uniformity Measure: 0.9869
+===> Image: 102 <===
+==> K Level: 2
+> Best: [106,173], Best Fitness: 8.5283
+> Mean Fitness: 8.5244, Std Fitness: 0.0036
+> Uniformity Measure: 0.9234
+==> K Level: 3
+> Best: [92,140,189], Best Fitness: 10.9277
+> Mean Fitness: 10.8872, Std Fitness: 0.0601
+> Uniformity Measure: 0.9186
+==> K Level: 4
+> Best: [1,62,118,172], Best Fitness: 13.1326
+> Mean Fitness: 13.0768, Std Fitness: 0.0861
+> Uniformity Measure: 0.9826
+==> K Level: 5
+> Best: [1,61,100,142,189], Best Fitness: 15.4076
+> Mean Fitness: 15.2828, Std Fitness: 0.1641
+> Uniformity Measure: 0.988
+===> Image: 112 <===
+==> K Level: 2
+> Best: [105,163], Best Fitness: 8.1476
+> Mean Fitness: 8.1393, Std Fitness: 0.0083
+> Uniformity Measure: 0.9397
+==> K Level: 3
+> Best: [1,68,141], Best Fitness: 10.6029
+> Mean Fitness: 10.5499, Std Fitness: 0.0522
+> Uniformity Measure: 0.9771
+==> K Level: 4
+> Best: [1,63,123,171], Best Fitness: 13.0587
+> Mean Fitness: 13.0376, Std Fitness: 0.0364
+> Uniformity Measure: 0.987
+==> K Level: 5
+> Best: [1,45,95,138,183], Best Fitness: 15.2821
+> Mean Fitness: 15.1996, Std Fitness: 0.095
+> Uniformity Measure: 0.9896
