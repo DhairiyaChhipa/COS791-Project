@@ -163,7 +163,6 @@ class GeneticAlgorithmNeighbourSearch:
         bestThreshold = currentThreshold
 
         for thresholdRange in rangeList:
-
             if index == 0:
                 newThreshold = min(max(1, chromosome.thresholds[index] + thresholdRange),
                                    chromosome.thresholds[index + 1] - 1)
