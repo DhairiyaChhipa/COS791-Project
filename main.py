@@ -94,9 +94,9 @@ def run_trials(dataset, dataset_names, k, kapur, algorithm, file_name):
 
 def main():
     print('Initializing...')
-    # Seed - 
-    seed = np.random.randint(0, 1000)
-    # seed =
+    # Seed - 3
+    # seed = np.random.randint(0, 1000)
+    seed = 3
     np.random.seed(seed)
     print('Seed:', seed)
     write_file('Results/RGA.txt', [f'=== SEED: {seed} ==='])
